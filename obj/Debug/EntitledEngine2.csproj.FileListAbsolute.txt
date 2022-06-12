@@ -1,0 +1,7 @@
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\bin\Debug\EntitledEngine2.exe.config
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\bin\Debug\EntitledEngine2.exe
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\bin\Debug\EntitledEngine2.pdb
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\obj\Debug\EntitledEngine2.csprojAssemblyReference.cache
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\obj\Debug\EntitledEngine2.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\obj\Debug\EntitledEngine2.exe
+C:\Users\PC\Documents\Visual Studio 2017\Projects\EntitledEngine2\EntitledEngine2\obj\Debug\EntitledEngine2.pdb
