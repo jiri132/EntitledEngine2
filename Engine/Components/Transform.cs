@@ -12,7 +12,12 @@ namespace EntitledEngine2.Engine.Components
     public class Transform : Component
     {
         public Vector2 Position;
-        public Vector2 Rotation;
+		public float zAxis;
         public Vector2 Scale;
+
+		public void Rotate(float angle)
+		{
+			this.zAxis = angle;
+		}
     }
 }

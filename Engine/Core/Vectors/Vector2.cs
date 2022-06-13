@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using EntitledEngine2.Engine.Core.Maths;
+
 namespace EntitledEngine2.Core
 {
 	public class Vector2
@@ -29,7 +31,11 @@ namespace EntitledEngine2.Core
 			this.x = x;
 			this.y = y;
 		}
-
+		public Vector2()
+		{
+			this.x = 0;
+			this.y = 0;
+		}
 
 		#endregion
 		#region Quick Variables Vectors
@@ -97,5 +103,26 @@ namespace EntitledEngine2.Core
 		}
 
 		#endregion
+
+		public static Vector2 MatMul(float[,] m, Vector2 v)
+		{
+			float[,] b = vecToMatrix(v);
+			return matrixToVec(Matrix.MatMul(m, b));
+		}
+		public static Vector2 matrixToVec(float[,] m)
+		{
+			Vector2 v = new Vector2(0,0);
+			v.x = m[0, 0];
+			v.y = m[1, 0];
+
+			return v;
+		}
+		public static float[,] vecToMatrix(Vector2 v)
+		{
+			float[,] m = new float[2, 1];
+			m[0, 0] = v.x;
+			m[1, 0] = v.y;
+			return m;
+		}
 	}
 }

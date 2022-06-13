@@ -65,6 +65,7 @@
     <Compile Include="Engine\Components\Transform.cs" />
     <Compile Include="Engine\Core\ECS\Component.cs" />
     <Compile Include="Engine\Core\ECS\Entity.cs" />
+    <Compile Include="Engine\Core\Maths\Matrix.cs" />
     <Compile Include="Engine\Core\Shapes\Circle.cs" />
     <Compile Include="Engine\Core\Shapes\Plane.cs" />
     <Compile Include="Engine\Components\Sprite.cs" />
@@ -92,8 +93,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Core\Maths\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

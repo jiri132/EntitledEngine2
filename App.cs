@@ -40,12 +40,16 @@ namespace EntitledEngine2
 			e.SetPosition(new Vector2(200,200));
 			e.SetScale(new Vector2(30,30));
 			e.AddComponent(Component_TYPE.SPRITE);
+			e.SetSprite(new Triangle(e.transform.Position, e.transform.Scale, Color.Red, "Setted Triangle"));
+			e.transform.Rotate(1f/360 * 50);
 		}
 
 		public override void OnUpdate()
 		{
 			//updateing the entitys position
 			e.SetPosition(new Vector2( e.transform.Position.x / 250 + e.transform.Position.x,e.transform.Position.y));
+			e.GetSpritePosition();
+			//Console.WriteLine(e.transform.Position.ToString());
 		}
 
 

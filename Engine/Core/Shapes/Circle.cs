@@ -14,6 +14,7 @@ namespace EntitledEngine2.Core.Shapes
 		private Vector2[] Points;
 		public Vector2 Position;
 		public float Radius;
+		public float Angle;
 		public Color color;
 		public string Tag;
 		private float segments = 18;
@@ -67,6 +68,25 @@ namespace EntitledEngine2.Core.Shapes
 			//float z = Math.Cos(angle) * Radius;
 			return new Vector2(x, y);
 		}
+		public override void UpdatePos(Vector2 v)
+		{
+			Position = v;
+		}
+		public override void Rotate(float angle)
+		{
+			this.Angle = angle;
+		}
+		public override float GetAngle()
+		{
+			return Angle;
+		}
+		public override Vector2 GetPosition()
+		{
+			return Position;
+		}
+
+		public override void Dispose() => DestroySelf();
+		
 
 		public void DestroySelf()
 		{
@@ -74,9 +94,6 @@ namespace EntitledEngine2.Core.Shapes
 			Engine.Engine.UnRegisterSprite(this);
 		}
 
-        public override void UpdatePos(Vector2 v)
-        {
-			Position = v;
-        }
-    }
+       
+	}
 }

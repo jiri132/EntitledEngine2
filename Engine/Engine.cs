@@ -10,6 +10,8 @@ using System.Collections.Generic;
 
 using EntitledEngine2.Core;
 using EntitledEngine2.Core.Shapes;
+using EntitledEngine2.Engine.Core.Maths;
+using matrix = EntitledEngine2.Engine.Core.Maths.Matrix;
 
 namespace EntitledEngine2.Engine
 {
@@ -128,13 +130,22 @@ namespace EntitledEngine2.Engine
 
 			foreach (Sprite s in s_list.ToArray())
 			{
-				Pen p = new Pen(s.GetColor(),5);
+				//Pen p = new Pen(s.GetColor(),5);
 				SolidBrush b = new SolidBrush(s.GetColor());
 
 				List<Point> points = new List<Point>();
 				for (int i = 0; i < s.GetDrawingPoints().Length; i++)
 				{
+					//get all points
 					Vector2 v = s.GetDrawingPoints()[i];
+
+					//make rotation
+					Vector2 rot = new Vector2();
+					rot = Vector2.MatMul(matrix.RotationZ(s.GetAngle()),v);
+					//Console.WriteLine(rot.ToString());
+					v = rot;
+
+					//add points into the drawing
 					points.Add(new Point((int)v.x,(int)v.y));
 				}
 				g.FillPolygon(b,points.ToArray());

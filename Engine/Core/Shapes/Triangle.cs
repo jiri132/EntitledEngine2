@@ -12,6 +12,7 @@ namespace EntitledEngine2.Core.Shapes
 	{
 		private Vector2[] Points;
 		public Vector2 Position, Scale;
+		public float Angle;
 		public Color color;
 		public string Tag;
 
@@ -49,6 +50,7 @@ namespace EntitledEngine2.Core.Shapes
 				new Vector2(Position.x + Scale.x * 0.5f,Position.y + Scale.y * 0.5f), //Left Point
 				new Vector2(Position.x + Scale.x * -0.5f,Position.y + Scale.y * 0.5f)  //Right Point
 			};
+
 			return _Points;
 		}
 
@@ -57,11 +59,26 @@ namespace EntitledEngine2.Core.Shapes
 			Position = v;
 		}
 
+		public override void Rotate(float angle)
+		{
+			this.Angle = angle;
+		}
+		public override float GetAngle()
+		{
+			return Angle;
+		}
+		public override Vector2 GetPosition()
+		{
+			return Position;
+		}
+		public override void Dispose() => DestroySelf();
+
 		public void DestroySelf()
 		{
 			//unregister
 			Engine.Engine.UnRegisterSprite(this);
 		}
 
+		
 	}
 }

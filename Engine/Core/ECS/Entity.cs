@@ -39,14 +39,38 @@ namespace EntitledEngine2.Core.ECS
                     break;
             }
         }
+
+		public void DisposeSprite()
+		{
+			//Sprite _s;
+			foreach (Sprite sprite in Components.ToArray())
+			{
+				sprite.Dispose();
+
+			}
+		}
+
+		public void SetSprite(Sprite s) => DisposeSprite();
+		
+
         public void SetPosition(Vector2 v)
         {
             transform.Position = v;
             foreach (Sprite sprite in Components)
             {
                 sprite.UpdatePos(v);
+				sprite.Rotate(transform.zAxis);
             }
         }
+
+		public void GetSpritePosition()
+		{
+			foreach (Sprite sprite in Components)
+			{
+				Console.WriteLine(sprite.GetPosition());
+			}
+		}
+
         public void SetScale(Vector2 v)
         {
             transform.Scale = v;
