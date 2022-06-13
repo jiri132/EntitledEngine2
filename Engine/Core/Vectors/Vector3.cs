@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntitledEngine2.Core.Vectors
+namespace EntitledEngine2.Core
 {
 	class Vector3
 	{

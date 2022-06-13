@@ -4,8 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 using EntitledEngine2.Core.Shapes;
+using EntitledEngine2.Engine.Components;
+using EntitledEngine2.Core.ECS;
+using EntitledEngine2.Core;
+
+
 
 namespace EntitledEngine2
 {
@@ -14,8 +20,12 @@ namespace EntitledEngine2
 
 		public App() : base(new Vector2(528, 550), "Entitled Engine Demo") { }
 
-		Triangle T = new Triangle(new Vector2(200,200),new Vector2(20,20), "First Try Inheritance");
 
+		//Triangle T = new Triangle(new Vector2(200,200),new Vector2(30,30), Color.White,"First Try Inheritance");
+		//Plane P = new Plane(new Vector2(400,400), new Vector2(30,30),Color.White, "First try plane");
+		//Circle C = new Circle(new Vector2(300,300), 15,Color.White, "circle");
+
+		Entity e = new Entity("First entity Component system");
 
 		public override void OnDraw()
 		{
@@ -24,12 +34,18 @@ namespace EntitledEngine2
 
 		public override void OnLoad()
 		{
-			//throw new NotImplementedException();
+			BackgroundColor = Color.Black;
+
+			//etting the components values
+			e.SetPosition(new Vector2(200,200));
+			e.SetScale(new Vector2(30,30));
+			e.AddComponent(Component_TYPE.SPRITE);
 		}
 
 		public override void OnUpdate()
 		{
-			//throw new NotImplementedException();
+			//updateing the entitys position
+			e.SetPosition(new Vector2( e.transform.Position.x / 250 + e.transform.Position.x,e.transform.Position.y));
 		}
 
 

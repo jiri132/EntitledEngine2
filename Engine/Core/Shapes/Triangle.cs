@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-
-using EntitledEngine2.Core.Shapes;
-using EntitledEngine2.Engine.Core.Shapes;
+using EntitledEngine2.Engine.Components;
 
 namespace EntitledEngine2.Core.Shapes
 {
@@ -30,7 +28,6 @@ namespace EntitledEngine2.Core.Shapes
 
 			//register
 			Engine.Engine.RegisterSprite(this);
-
 		}
 
 		public override Vector2[] GetDrawingPoints()
@@ -53,6 +50,11 @@ namespace EntitledEngine2.Core.Shapes
 				new Vector2(Position.x + Scale.x * -0.5f,Position.y + Scale.y * 0.5f)  //Right Point
 			};
 			return _Points;
+		}
+
+		public override void UpdatePos(Vector2 v)
+		{
+			Position = v;
 		}
 
 		public void DestroySelf()

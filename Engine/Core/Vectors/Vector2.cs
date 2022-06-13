@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
+namespace EntitledEngine2.Core
+{
 	public class Vector2
 	{
 		public float x;
@@ -59,17 +60,18 @@ using System.Threading.Tasks;
 		#endregion
 		#region Comparing
 
-	public override string ToString()
+		public override string ToString()
 		{
 			return $"[ {x}, {y} ]";
 		}
-		
+
 		public static bool operator ==(Vector2 v1, Vector2 v2)
 		{
 			if (v1.x == v2.x && v1.y == v2.y)
 			{
 				return true;
-			}else
+			}
+			else
 			{
 				return false;
 			}
@@ -96,4 +98,4 @@ using System.Threading.Tasks;
 
 		#endregion
 	}
-
+}
