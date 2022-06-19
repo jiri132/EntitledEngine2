@@ -9,20 +9,20 @@ using EntitledEngine2.Engine.Components;
 
 namespace EntitledEngine2.Core.Shapes
 {
-    public class Circle : Sprite
-    {
+	public class Circle : Sprite
+	{
 		private Vector2[] Points;
-		public Vector2 Position;
-		public float Radius;
-		public float Angle;
+		//public Vector2 Position;
+		//public float Radius;
 		public Color color;
 		public string Tag;
-		private float segments = 18;
-		public Circle(Vector2 Position, float Radius, Color color, string Tag)
+		private float segments = 16;
+		public SpriteType TYPE { private set; get; } = SpriteType.CIRCLE;
+		public Circle(/*Vector2 Position,float Radius,*/ Color color, string Tag)
 		{
 			//Assigning the variables
-			this.Position = Position;
-			this.Radius = Radius;
+			//this.Position = Position;
+			//this.Radius = Radius;
 			this.color = color;
 			this.Tag = Tag;
 
@@ -31,7 +31,7 @@ namespace EntitledEngine2.Core.Shapes
 
 			//register
 			
-			Engine.Engine.RegisterSprite(this);
+/*			Engine.Engine.RegisterSprite(this);*/
 		}
 
 
@@ -39,6 +39,10 @@ namespace EntitledEngine2.Core.Shapes
 		public override Color GetColor()
         {
 			return color;
+        }
+        public override SpriteType GetSpriteType()
+        {
+			return TYPE;
         }
 
         public override Vector2[] GetDrawingPoints()
@@ -63,36 +67,23 @@ namespace EntitledEngine2.Core.Shapes
 		public Vector2 Evaluate(float t)
 		{
 			float angle = (float)(Math.PI*2) * t;
-			float x = (float)Math.Sin(angle) * Radius + Position.x;
-			float y = (float)Math.Cos(angle) * Radius + Position.y;	
+			float x = (float)Math.Sin(angle);
+			float y = (float)Math.Cos(angle);	
 			//float z = Math.Cos(angle) * Radius;
 			return new Vector2(x, y);
 		}
-		public override void UpdatePos(Vector2 v)
-		{
-			Position = v;
-		}
-		public override void Rotate(float angle)
-		{
-			this.Angle = angle;
-		}
-		public override float GetAngle()
-		{
-			return Angle;
-		}
-		public override Vector2 GetPosition()
-		{
-			return Position;
-		}
+		
 
-		public override void Dispose() => DestroySelf();
+		/*public override void Dispose() => DestroySelf();
 		
 
 		public void DestroySelf()
 		{
+
+			Console.WriteLine("Unregisterd circle");
 			//unregister
 			Engine.Engine.UnRegisterSprite(this);
-		}
+		}*/
 
        
 	}

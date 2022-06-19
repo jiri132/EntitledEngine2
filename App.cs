@@ -20,13 +20,7 @@ namespace EntitledEngine2
 
 		public App() : base(new Vector2(528, 550), "Entitled Engine Demo") { }
 
-
-		//Triangle T = new Triangle(new Vector2(200,200),new Vector2(30,30), Color.White,"First Try Inheritance");
-		//Plane P = new Plane(new Vector2(400,400), new Vector2(30,30),Color.White, "First try plane");
-		//Circle C = new Circle(new Vector2(300,300), 15,Color.White, "circle");
-
 		Entity e = new Entity("First entity Component system");
-
 		public override void OnDraw()
 		{
 			//throw new NotImplementedException();
@@ -35,30 +29,54 @@ namespace EntitledEngine2
 		public override void OnLoad()
 		{
 			BackgroundColor = Color.Black;
+			CameraPosition = new Vector2(256, 256);
 
 			//etting the components values
-			e.SetPosition(new Vector2(200,200));
-			e.SetScale(new Vector2(30,30));
+			e.transform.Scale = new Vector2(30,30);
+			
+
 			e.AddComponent(Component_TYPE.SPRITE);
-			e.SetSprite(new Triangle(e.transform.Position, e.transform.Scale, Color.Red, "Setted Triangle"));
-			e.transform.Rotate(1f/360 * 50);
+			e.SetSprite(new Circle(Color.Red, "Setted Circle"));
+
 		}
 
+		float i;
+		int speed = 5;
 		public override void OnUpdate()
 		{
-			//updateing the entitys position
-			e.SetPosition(new Vector2( e.transform.Position.x / 250 + e.transform.Position.x,e.transform.Position.y));
-			e.GetSpritePosition();
-			//Console.WriteLine(e.transform.Position.ToString());
+			//rotate and move forward
+			i += 0.01f;
+			e.transform.Rotate(i);
+			e.transform.Position += e.transform.GetForwardVector() / 2f;
+
+			//spawn trail
+			Entity entity = new Entity("testing obstacle");
+			entity.AddComponent(Component_TYPE.SPRITE);
+			entity.transform.Position = e.transform.Position;
+			
 		}
 
-
-		public override void GetKeyDown(KeyEventArgs e)
+		public override void GetKeyDown(KeyEventArgs key)
 		{
-			//throw new NotImplementedException();
+			if (key.KeyCode == Keys.A)
+            {
+				e.transform.Position.x -= speed;
+			}
+			if (key.KeyCode == Keys.W)
+			{
+				e.transform.Position.y -= speed;
+			}
+			if (key.KeyCode == Keys.S)
+			{
+				e.transform.Position.y += speed;
+			}
+			if (key.KeyCode == Keys.D)
+			{
+				e.transform.Position.x += speed;
+			}
 		}
 
-		public override void GetKeyUp(KeyEventArgs e)
+		public override void GetKeyUp(KeyEventArgs key)
 		{
 			//throw new NotImplementedException();
 		}

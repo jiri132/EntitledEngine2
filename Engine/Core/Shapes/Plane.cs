@@ -13,16 +13,13 @@ namespace EntitledEngine2.Core.Shapes
 	public class Plane : Sprite
 	{
 		private Vector2[] Points;
-		public Vector2 Position, Scale;
-		public float Angle;
 		public Color color;
 		public string Tag;
+		public SpriteType TYPE { private set; get; } = SpriteType.PLANE;
 
-		public Plane(Vector2 Position, Vector2 Scale,Color color, string Tag)
+		public Plane(Color color, string Tag)
 		{
 			//Assigning the variables
-			this.Position = Position;
-			this.Scale = Scale;
 			this.color = color;
 			this.Tag = Tag;
 
@@ -30,7 +27,7 @@ namespace EntitledEngine2.Core.Shapes
 			Points = CalculatePoints();
 
 			//register
-			Engine.Engine.RegisterSprite(this);
+/*			Engine.Engine.RegisterSprite(this);*/
 		}
 
 		public override Vector2[] GetDrawingPoints()
@@ -43,44 +40,33 @@ namespace EntitledEngine2.Core.Shapes
 		{
 			return color;
 		}
+		public override SpriteType GetSpriteType()
+		{
+			return TYPE;
+		}
 
 		private Vector2[] CalculatePoints()
 		{
 			Vector2[] _Points = new Vector2[]
 			{
-				new Vector2(Position.x + Scale.x * -0.5f,Position.y + Scale.y * -0.5f), //Top Left Point
-				new Vector2(Position.x + Scale.x * 0.5f,Position.y + Scale.y * -0.5f), //Top Right Point
-				new Vector2(Position.x + Scale.x * 0.5f,Position.y + Scale.y * 0.5f), //Bottom Left Point
-				new Vector2(Position.x + Scale.x * -0.5f,Position.y + Scale.y * 0.5f)  //Bottom Right Point
+				new Vector2(-0.5f,-0.5f), //Top Left Point
+				new Vector2(0.5f,-0.5f), //Top Right Point
+				new Vector2(0.5f,0.5f), //Bottom Left Point
+				new Vector2(-0.5f,0.5f)  //Bottom Right Point
 			};
 
 			return _Points;
 		}
 
-		public override void UpdatePos(Vector2 v)
-		{
-			Position = v;
-		}
-
-		public override void Rotate(float angle)
-		{
-			this.Angle = angle;
-		}
-		public override float GetAngle()
-		{
-			return Angle;
-		}
-		public override Vector2 GetPosition()
-		{
-			return Position;
-		}
-		public override void Dispose() => DestroySelf();
+		
+		/*public override void Dispose() => DestroySelf();
 
 		public void DestroySelf()
 		{
+			Console.WriteLine("Unregisterd plane");
 			//unregister
 			Engine.Engine.UnRegisterSprite(this);
-		}
+		}*/
 
 		
 	}

@@ -12,6 +12,7 @@ using EntitledEngine2.Core;
 using EntitledEngine2.Core.Shapes;
 using EntitledEngine2.Engine.Core.Maths;
 using matrix = EntitledEngine2.Engine.Core.Maths.Matrix;
+using EntitledEngine2.Core.ECS;
 
 namespace EntitledEngine2.Engine
 {
@@ -32,7 +33,7 @@ namespace EntitledEngine2.Engine
 		public static Color BackgroundColor = Color.Beige;
 
 		public Vector2 CameraZoom = new Vector2(.5f, .5f); //dont really mess with the camera zoom it is not really needed
-		public Vector2 CameraPosition = Vector2.Zero(); //position will automaticly go to the middle when the screen starts
+		public Vector2 CameraPosition = Vector2.Zero; //position will automaticly go to the middle when the screen starts
 		public float CameraAngle = 0; //rotation of the camera in 2D on Z axis R to L
 
 		#endregion
@@ -42,19 +43,18 @@ namespace EntitledEngine2.Engine
 		private string Title;
 
 		private Canvas Window = null;
-		private bool normalizedWindow = true;
 		private Thread GameLoopThread = null;
 
 		//list for rendering all the sprites
-		private static List<Sprite> s_list = new List<Sprite>();
+		private static List<Entity> e_list = new List<Entity>();
 
-		public static void RegisterSprite(Sprite s)
+		public static void RegisterSprite(Entity e)
 		{
-			s_list.Add(s);
+			e_list.Add(e);
 		}
-		public static void UnRegisterSprite(Sprite s)
+		public static void UnRegisterSprite(Entity e)
 		{
-			s_list.Add(s);
+			e_list.Remove(e);
 		}
 		#endregion
 
@@ -128,28 +128,33 @@ namespace EntitledEngine2.Engine
 			g.RotateTransform(CameraAngle);
 			g.ScaleTransform(CameraZoom.x, CameraZoom.y);
 
-			foreach (Sprite s in s_list.ToArray())
+			foreach (Entity et in e_list.ToArray())
 			{
-				//Pen p = new Pen(s.GetColor(),5);
-				SolidBrush b = new SolidBrush(s.GetColor());
+				Sprite[] s = et.GetSprite();
+                for (int x = 0; x < s.Length; x++)
+                {
+					//Pen p = new Pen(s.GetColor(),5);
+					SolidBrush b = new SolidBrush(s[x].GetColor());
 
-				List<Point> points = new List<Point>();
-				for (int i = 0; i < s.GetDrawingPoints().Length; i++)
-				{
-					//get all points
-					Vector2 v = s.GetDrawingPoints()[i];
+					List<Point> points = new List<Point>();
+					for (int i = 0; i < s[x].GetDrawingPoints().Length; i++)
+					{
+						//get all points
+						Vector2 v = s[x].GetDrawingPoints()[i];
 
-					//make rotation
-					Vector2 rot = new Vector2();
-					rot = Vector2.MatMul(matrix.RotationZ(s.GetAngle()),v);
-					//Console.WriteLine(rot.ToString());
-					v = rot;
-
-					//add points into the drawing
-					points.Add(new Point((int)v.x,(int)v.y));
+						//make rotation
+						Vector2 rot = new Vector2();
+						rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
+						//Console.WriteLine(rot.ToString());
+				
+						v = rot;
+						//add points postion anf into the drawing
+						points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
+					}
+					g.FillPolygon(b, points.ToArray());
 				}
-				g.FillPolygon(b,points.ToArray());
 			}
+			Console.WriteLine(e_list.ToArray().Length.ToString());
 		}
 		#endregion
 

@@ -9,14 +9,13 @@ using EntitledEngine2.Core;
 
 namespace EntitledEngine2.Core.Shapes
 {
+	public enum SpriteType { PLANE, TRIANGLE, CIRCLE }
+
 	public abstract class Sprite : Component
 	{
-		public abstract void UpdatePos(Vector2 v);
-		public abstract void Rotate(float angle);
+
+		public abstract SpriteType GetSpriteType();
 		public abstract Vector2[] GetDrawingPoints();
 		public abstract Color GetColor();
-		public abstract float GetAngle();
-		public abstract Vector2 GetPosition();
-		public abstract void Dispose();
 	}
 }

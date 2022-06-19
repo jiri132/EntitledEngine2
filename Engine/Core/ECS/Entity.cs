@@ -13,9 +13,6 @@ namespace EntitledEngine2.Core.ECS
     /// <summary>
     /// Entity Component System V1.0
     /// </summary>
-
-
-
     public class Entity
     {
         public string name { private set; get; }
@@ -26,6 +23,7 @@ namespace EntitledEngine2.Core.ECS
         {
             this.name = name;
             transform = new Transform();
+            Engine.Engine.RegisterSprite(this);
         }
 
         public void AddComponent(Component_TYPE t)
@@ -33,7 +31,7 @@ namespace EntitledEngine2.Core.ECS
             switch (t)
             {
                 case Component_TYPE.SPRITE:
-                    Components.Add(new Plane(transform.Position, transform.Scale, Color.Red, "Default"));
+                    Components.Add(new Plane(Color.Red, "Default"));
                     break;
                 default:
                     break;
@@ -42,39 +40,27 @@ namespace EntitledEngine2.Core.ECS
 
 		public void DisposeSprite()
 		{
-			//Sprite _s;
 			foreach (Sprite sprite in Components.ToArray())
 			{
-				sprite.Dispose();
-
+                Sprite s = sprite;
+                Components.Remove(s);
+                return;
 			}
-		}
+        }
 
-		public void SetSprite(Sprite s) => DisposeSprite();
-		
-
-        public void SetPosition(Vector2 v)
+		public void SetSprite(Sprite s)
         {
-            transform.Position = v;
-            foreach (Sprite sprite in Components)
+            DisposeSprite();
+            Components.Add(s);
+        }
+		public Sprite[] GetSprite()
+        {
+            List<Sprite> s_a = new List<Sprite>();
+            foreach (Sprite s in Components.ToArray())
             {
-                sprite.UpdatePos(v);
-				sprite.Rotate(transform.zAxis);
+                s_a.Add(s);
             }
+            return s_a.ToArray();
         }
-
-		public void GetSpritePosition()
-		{
-			foreach (Sprite sprite in Components)
-			{
-				Console.WriteLine(sprite.GetPosition());
-			}
-		}
-
-        public void SetScale(Vector2 v)
-        {
-            transform.Scale = v;
-        }
-
     }
 }

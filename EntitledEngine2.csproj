@@ -65,6 +65,7 @@
     <Compile Include="Engine\Components\Transform.cs" />
     <Compile Include="Engine\Core\ECS\Component.cs" />
     <Compile Include="Engine\Core\ECS\Entity.cs" />
+    <Compile Include="Engine\Core\Maths\Mathf.cs" />
     <Compile Include="Engine\Core\Maths\Matrix.cs" />
     <Compile Include="Engine\Core\Shapes\Circle.cs" />
     <Compile Include="Engine\Core\Shapes\Plane.cs" />
