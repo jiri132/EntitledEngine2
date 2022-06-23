@@ -22,6 +22,7 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Custom Sprites | ✅ | ✅ |
 | Sprite Slicer | ❌ | ✅ |
 | UI | ❌ | ❌ |
+| Rotations | ❌ | ✅ |
 | Custom Logs | ✅ | ❌ |
 | Exit Codes | ✅ | ❌ |
 
