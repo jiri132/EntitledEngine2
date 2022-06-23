@@ -27,9 +27,7 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 
 # Some Clips of what I've made with the engine so far
 Rotations Rendering
-
-
-https://user-images.githubusercontent.com/76393975/175298419-f61fa560-72eb-47db-b334-6c0e64acfd42.mp4
+![](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotations.gif)
 
 
 
