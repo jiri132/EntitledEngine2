@@ -26,7 +26,7 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Exit Codes | ✅ | ❌ |
 
 # Some Clips of what I've made with the engine so far
-Rotations Rendering (slow frame rate because of gif conversion)
+Rotations Rendering (slow frame rate because of gif conversion)<br>
 ![](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotation.gif)
 
 
