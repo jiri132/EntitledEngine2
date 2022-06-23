@@ -23,28 +23,28 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Sprite Slicer | ❌ | ✅ |
 
 # Diffuculties I faced during development
-#### Inheritence 
+### Inheritence 
 While workoing on the ECS (Entity Component System) I have faced amyn problems that something in the list wasn't the same type as the foreach loop requested or,it was just null because I removed itself without removing the component in the list of the entity.<br>
 Mean while after some time I got the inheritence working and it felt so easy to make something inside of it, as if it was just unity but without the visual engine where you can see everything what you do.<br>
 
-#### Physics
+### Physics
 When introducing physics I had a huge struggle implementing colission points, instead of using the AABB (Axis Aligned Bounding Box) this is just basicly a rectangle without any rotations to it.<br>
 normally its hard to combine an triangle collider and plane collider and solve for both items what should come out.<br>
 the outcome was pretty simple when using verlets solution.<br>
 but physics is still a WIP (Work In Progress) and hasnt been fuly submitted to github.<br>
 
-#### Sprite Slicer
+### Sprite Slicer
 # wokr form here
 When Implementing this I had difficultys reading the image file and make slices out of it first, 
 
 # What I changed
-#### Rendering
+### Rendering
 Has been chenged to use polygons and points, this needs parameters for points that store [x,y] values.<br>
 After that that you made a point you need to add it to a list and then convert it to an array so the poltgon renderer can render the object in the order you've sent the points through.<br>
 The basic shapes have got everything right you dont need to edit anything to it.<br>
 This also chenges the rendering look of the application / game to a pixelated view.<br>
 
-#### Physics
+### Physics
 All the physics that are gonna be calculated are gonne be used with point of collision, then it doens't matter what kind of shape it is because it looks for a point of the deepest intersection.<br>
 And then with verlets solution it resolves all the things that should happend to both entities.<br>
 and then collision checks have been optimized to be on just the X axis and deletes all duplicate collision tests.<br>
