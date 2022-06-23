@@ -21,6 +21,15 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Physics | ✅ | ✅ |
 | Custom Sprites | ✅ | ✅ |
 | Sprite Slicer | ❌ | ✅ |
+| UI | ❌ | ❌ |
+| Custom Logs | ✅ | ❌ |
+| Exit Codes | ✅ | ❌ |
+
+# Some Clips of what I've made with the engine so far
+Rotations Rendering
+https://user-images.githubusercontent.com/76393975/175298419-f61fa560-72eb-47db-b334-6c0e64acfd42.mp4
+
+
 
 # Diffuculties I faced during development
 ### Inheritence 
@@ -34,8 +43,7 @@ the outcome was pretty simple when using verlets solution.<br>
 but physics is still a WIP (Work In Progress) and hasnt been fuly submitted to github.<br>
 
 ### Sprite Slicer
-# wokr form here
-When Implementing this I had difficultys reading the image file and make slices out of it first, 
+When Implementing this I had difficultys reading the image file and make slices out of it first, but after some time I began to just save each indiividual sprite to a list of sprites in then engine itself so when you splice it you can always recall it.<br>
 
 # What I changed
 ### Rendering
