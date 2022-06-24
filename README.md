@@ -25,6 +25,8 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Rotations | ❌ | ✅ |
 | Custom Logs | ✅ | ❌ |
 | Exit Codes | ✅ | ❌ |
+| Sound System | ❌ | ❌ |
+| Unit to Pixel | ✅ | ❌ |
 
 # Some Clips of what I've made with the engine so far
 Rotations Rendering (slow frame rate because of gif conversion)<br>
