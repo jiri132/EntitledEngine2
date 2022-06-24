@@ -46,7 +46,7 @@ but physics is still a WIP (Work In Progress) and hasnt been fuly submitted to g
 ### Sprite Slicer
 When Implementing this I had difficultys reading the image file and make slices out of it first, but after some time I began to just save each indiividual sprite to a list of sprites in then engine itself so when you splice it you can always recall it.<br>
 
-# What I changed
+# What I've changed
 ### Rendering
 Has been chenged to use polygons and points, this needs parameters for points that store [x,y] values.<br>
 After that that you made a point you need to add it to a list and then convert it to an array so the poltgon renderer can render the object in the order you've sent the points through.<br>
