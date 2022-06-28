@@ -36,7 +36,7 @@ Rotations Rendering (slow frame rate because of gif conversion)<br>
 
 # Diffuculties I faced during development
 ### Inheritence 
-While workoing on the ECS (Entity Component System) I have faced amyn problems that something in the list wasn't the same type as the foreach loop requested or,it was just null because I removed itself without removing the component in the list of the entity.<br>
+While working on the ECS (Entity Component System) I have faced amyn problems that something in the list wasn't the same type as the foreach loop requested or,it was just null because I removed itself without removing the component in the list of the entity.<br>
 Mean while after some time I got the inheritence working and it felt so easy to make something inside of it, as if it was just unity but without the visual engine where you can see everything what you do.<br>
 
 ### Physics
