@@ -23,7 +23,7 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Sprite Slicer | ❌ | ✅ |
 | UI | ❌ | ❌ |
 | Rotations | ❌ | ✅ |
-| Custom Logs | ✅ | ❌ |
+| Custom Logs | ✅ | ✅ |
 | Exit Codes | ✅ | ❌ |
 | Sound System | ❌ | ❌ |
 | Unit to Pixel | ✅ | ❌ |
