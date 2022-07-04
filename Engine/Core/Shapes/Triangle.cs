@@ -41,7 +41,10 @@ namespace EntitledEngine2.Core.Shapes
 		{
 			return TYPE;
 		}
-
+		public override void SetColor(Color color)
+		{
+			this.color = color;
+		}
 		private Vector2[] CalculatePoints()
 		{
 			Vector2[] _Points = new Vector2[]

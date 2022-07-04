@@ -9,7 +9,7 @@ using EntitledEngine2.Core.ECS;
 
 namespace EntitledEngine2.Engine.Components
 {
-    public class Transform : Component
+    public class Transform
     {
         public Vector2 Position;
 		public float zAxis { private set; get; }

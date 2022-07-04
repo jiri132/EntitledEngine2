@@ -7,6 +7,7 @@ using System.Drawing;
 
 using EntitledEngine2.Engine.Components;
 using EntitledEngine2.Core.Shapes;
+using EntitledEngine2.Engine.Core.Colliders;
 
 namespace EntitledEngine2.Core.ECS
 {
@@ -31,36 +32,87 @@ namespace EntitledEngine2.Core.ECS
             switch (t)
             {
                 case Component_TYPE.SPRITE:
+                    
                     Components.Add(new Plane(Color.Red, "Default"));
+                    break;
+                case Component_TYPE.COLLIDER:
+                    Components.Add(new PlaneCollider(transform.Scale,Vector2.Zero));
                     break;
                 default:
                     break;
             }
         }
 
-		public void DisposeSprite()
+		public void DisposeComponent(Component_TYPE T)
 		{
-			foreach (Sprite sprite in Components.ToArray())
-			{
-                Sprite s = sprite;
-                Components.Remove(s);
-                return;
-			}
+            switch (T)
+            {
+                case Component_TYPE.SPRITE:
+                    foreach (Sprite sprite in Components.ToArray())
+                    {
+                        Sprite s = sprite;
+                        Components.Remove(s);
+                        return;
+                    }
+                    break;
+                case Component_TYPE.COLLIDER:
+                    foreach (Collider collider in Components.ToArray())
+                    {
+                        Collider c = collider;
+                        Components.Remove(c);
+                        return;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-
+        
 		public void SetSprite(Sprite s)
         {
-            DisposeSprite();
+            DisposeComponent(Component_TYPE.SPRITE);
             Components.Add(s);
         }
-		public Sprite[] GetSprite()
+
+        /// <summary>
+        /// Return an Array of Sprites that are inside the components
+        /// </summary>
+        /// <returns>Array of Sprite</returns>
+        public Sprite[] GetSprites()
         {
             List<Sprite> s_a = new List<Sprite>();
-            foreach (Sprite s in Components.ToArray())
+
+            foreach (Component s in Components.ToArray())
             {
-                s_a.Add(s);
+                if(s.isSprite())
+                {
+                    s_a.Add((Sprite)s);
+                }
             }
             return s_a.ToArray();
         }
+
+        /// <summary>
+        /// return the first sprite made in components
+        /// </summary>
+        public Sprite getSprite => GetSprites()[0];
+
+        /// <summary>
+        /// Returns the first collider
+        /// </summary>
+        /// <returns>Colliders</returns>
+        public Collider GetCollider()
+        {
+            List<Collider> ss = new List<Collider>();
+            foreach (Component s in Components.ToArray())
+            {
+                if (s.isCollider())
+                {
+                    ss.Add((Collider)s);
+                }
+            }
+            return ss[0];
+        }
+        public void DestroySelf() { Engine.Engine.UnRegisterSprite(this); }
     }
 }

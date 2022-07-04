@@ -62,8 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Engine\Components\Collider.cs" />
     <Compile Include="Engine\Components\Transform.cs" />
+    <Compile Include="Engine\Core\Colliders\PlaneCollider.cs" />
     <Compile Include="Engine\Core\ECS\Component.cs" />
+    <Compile Include="Engine\Core\ECS\Destructor.cs" />
     <Compile Include="Engine\Core\ECS\Entity.cs" />
     <Compile Include="Engine\Core\Maths\Mathf.cs" />
     <Compile Include="Engine\Core\Maths\Matrix.cs" />

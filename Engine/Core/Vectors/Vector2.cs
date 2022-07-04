@@ -39,6 +39,11 @@ namespace EntitledEngine2.Core
 
 		#endregion
 		#region Quick Variables Vectors
+		public float xy => _xy();
+		private float _xy()
+        {
+			return x + y;
+        }
 		public static Vector2 Up => new Vector2(0, 1);
 		public static Vector2 Down => new Vector2(0, -1);
 		public static Vector2 Left => new Vector2(-1,0);

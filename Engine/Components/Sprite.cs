@@ -13,9 +13,13 @@ namespace EntitledEngine2.Core.Shapes
 
 	public abstract class Sprite : Component
 	{
-
 		public abstract SpriteType GetSpriteType();
 		public abstract Vector2[] GetDrawingPoints();
 		public abstract Color GetColor();
+
+		public abstract void SetColor(Color color);
+
+		public override bool isCollider() => false;
+		public override bool isSprite() => true;
 	}
 }

@@ -71,11 +71,12 @@ namespace EntitledEngine2.Engine
 			Window.Paint += Renderer;
 			Window.KeyDown += Window_KeyDown;
 			Window.KeyUp += Window_KeyUp;
-			
 
 			GameLoopThread = new Thread(GameLoop);
 			GameLoopThread.Start();
 
+
+			Console.WriteLine("[SYSTEM] App Initialized");
 			Application.Run(Window);
 		}
 
@@ -92,8 +93,8 @@ namespace EntitledEngine2.Engine
 
 		void GameLoop()
 		{
-
 			OnLoad();
+			Console.WriteLine("[APP] Game Data Loaded");
 			while (GameLoopThread.IsAlive)
 			{
 				try
@@ -124,13 +125,13 @@ namespace EntitledEngine2.Engine
 
 			g.Clear(BackgroundColor);
 
-			g.TranslateTransform(CameraPosition.x, CameraPosition.y);
+			g.TranslateTransform(CameraPosition.x + 256, CameraPosition.y + 256);
 			g.RotateTransform(CameraAngle);
 			g.ScaleTransform(CameraZoom.x, CameraZoom.y);
 
 			foreach (Entity et in e_list.ToArray())
 			{
-				Sprite[] s = et.GetSprite();
+				Sprite[] s = et.GetSprites();
                 for (int x = 0; x < s.Length; x++)
                 {
 					//Pen p = new Pen(s.GetColor(),5);
@@ -145,16 +146,14 @@ namespace EntitledEngine2.Engine
 						//make rotation
 						Vector2 rot = new Vector2();
 						rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
-						//Console.WriteLine(rot.ToString());
-				
 						v = rot;
+
 						//add points postion anf into the drawing
 						points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
 					}
 					g.FillPolygon(b, points.ToArray());
 				}
 			}
-			Console.WriteLine(e_list.ToArray().Length.ToString());
 		}
 		#endregion
 

@@ -16,7 +16,7 @@ namespace EntitledEngine2.Core.Shapes
 		//public float Radius;
 		public Color color;
 		public string Tag;
-		private float segments = 16;
+		private float segments = 12; // low quality circle = 16 high quality circle = 36 16k circle = 78 
 		public SpriteType TYPE { private set; get; } = SpriteType.CIRCLE;
 		public Circle(/*Vector2 Position,float Radius,*/ Color color, string Tag)
 		{
@@ -52,7 +52,12 @@ namespace EntitledEngine2.Core.Shapes
 			return Points;
 		}
 
-		private Vector2[] CalculatePoints()
+        public override void SetColor(Color color)
+        {
+			this.color = color;
+        }
+
+        private Vector2[] CalculatePoints()
 		{			
 			List<Vector2> v = new List<Vector2>();
 
