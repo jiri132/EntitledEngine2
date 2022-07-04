@@ -39,13 +39,13 @@ Rotations Rendering (slow frame rate because of gif conversion)<br>
 While working on the ECS (Entity Component System) I have faced amyn problems that something in the list wasn't the same type as the foreach loop requested or,it was just null because I removed itself without removing the component in the list of the entity.<br>
 Mean while after some time I got the inheritence working and it felt so easy to make something inside of it, as if it was just unity but without the visual engine where you can see everything what you do.<br>
 
-### Physics
+### Physics [WIP]
 When introducing physics I had a huge struggle implementing colission points, instead of using the AABB (Axis Aligned Bounding Box) this is just basicly a rectangle without any rotations to it.<br>
 normally its hard to combine an triangle collider and plane collider and solve for both items what should come out.<br>
 the outcome was pretty simple when using verlets solution.<br>
 but physics is still a WIP (Work In Progress) and hasnt been fuly submitted to github.<br>
 
-### Sprite Slicer
+### Sprite Slicer [WIP] [Not pushed]
 When Implementing this I had difficultys reading the image file and make slices out of it first, but after some time I began to just save each indiividual sprite to a list of sprites in then engine itself so when you splice it you can always recall it.<br>
 
 # What I've changed
