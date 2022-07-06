@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
-using EntitledEngine2.Engine.Components;
-using EntitledEngine2.Core.Shapes;
 using EntitledEngine2.Engine.Core.Colliders;
+using EntitledEngine2.Engine.Core.Shapes;
+using EntitledEngine2.Engine.Core.Vec2;
 
-namespace EntitledEngine2.Core.ECS
+using EntitledEngine2.Engine.Components;
+
+
+namespace EntitledEngine2.Engine.Core.ECS
 {
     /// <summary>
     /// Entity Component System V1.0
@@ -24,7 +23,8 @@ namespace EntitledEngine2.Core.ECS
         {
             this.name = name;
             transform = new Transform();
-            Engine.Engine.RegisterSprite(this);
+            Engine.RegisterEntity(this);
+            Debug.Log($"Created Entity - {name}");
         }
 
         public void AddComponent(Component_TYPE t)
@@ -34,9 +34,11 @@ namespace EntitledEngine2.Core.ECS
                 case Component_TYPE.SPRITE:
                     
                     Components.Add(new Plane(Color.Red, "Default"));
+                    Debug.Log($"Added default red Plane for - {name}");
                     break;
                 case Component_TYPE.COLLIDER:
                     Components.Add(new PlaneCollider(transform.Scale,Vector2.Zero));
+                    Debug.Log($"Added default PlaneCollider for - {name}");
                     break;
                 default:
                     break;
@@ -70,6 +72,7 @@ namespace EntitledEngine2.Core.ECS
         
 		public void SetSprite(Sprite s)
         {
+            Debug.Log($"Changing sprites for {name}");
             DisposeComponent(Component_TYPE.SPRITE);
             Components.Add(s);
         }
@@ -113,6 +116,6 @@ namespace EntitledEngine2.Core.ECS
             }
             return ss[0];
         }
-        public void DestroySelf() { Engine.Engine.UnRegisterSprite(this); }
+        public void DestroySelf() { Debug.Log($"Destroyed - {name}"); Engine.UnRegisterEntity(this); }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using EntitledEngine2.Engine.Core.Maths;
 
-namespace EntitledEngine2.Core
+namespace EntitledEngine2.Engine.Core.Vec2
 {
 	public class Vector2
 	{

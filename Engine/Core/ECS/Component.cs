@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using EntitledEngine2.Core;
-using EntitledEngine2.Core.Shapes;
-
-namespace EntitledEngine2.Core.ECS
+﻿namespace EntitledEngine2.Engine.Core.ECS
 {
 
     public enum Component_TYPE
     {
-        SPRITE, COLLIDER
+        SPRITE, COLLIDER, RIGIDBODY
     }
 
     public abstract class Component
     {
         public abstract bool isSprite();
         public abstract bool isCollider();
+        public abstract bool isRigidbody();
 
     }
 }

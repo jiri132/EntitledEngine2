@@ -1,11 +1,4 @@
-﻿using EntitledEngine2.Core;
-using EntitledEngine2.Core.ECS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using EntitledEngine2.Engine.Core.Vec2;
 
 namespace EntitledEngine2.Engine.Core.Colliders
 {

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using EntitledEngine2.Engine.Components;
 
-namespace EntitledEngine2.Core.Shapes
+using EntitledEngine2.Engine.Components;
+using EntitledEngine2.Engine.Core.Vec2;
+
+namespace EntitledEngine2.Engine.Core.Shapes
 {
 	public class Triangle : Sprite
 	{

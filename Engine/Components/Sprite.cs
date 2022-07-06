@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntitledEngine2.Core.ECS;
-using EntitledEngine2.Core;
+﻿using System.Drawing;
 
-namespace EntitledEngine2.Core.Shapes
+using EntitledEngine2.Engine.Core.ECS;
+using EntitledEngine2.Engine.Core.Vec2;
+
+namespace EntitledEngine2.Engine.Core.Shapes
 {
 	public enum SpriteType { PLANE, TRIANGLE, CIRCLE }
 
@@ -21,5 +17,6 @@ namespace EntitledEngine2.Core.Shapes
 
 		public override bool isCollider() => false;
 		public override bool isSprite() => true;
+		public override bool isRigidbody() => false;
 	}
 }

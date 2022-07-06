@@ -8,11 +8,10 @@ using System.Threading;
 using System.Linq;
 using System.Collections.Generic;
 
-using EntitledEngine2.Core;
-using EntitledEngine2.Core.Shapes;
-using EntitledEngine2.Engine.Core.Maths;
 using matrix = EntitledEngine2.Engine.Core.Maths.Matrix;
-using EntitledEngine2.Core.ECS;
+using EntitledEngine2.Engine.Core.Vec2;
+using EntitledEngine2.Engine.Core.Shapes;
+using EntitledEngine2.Engine.Core.ECS;
 
 namespace EntitledEngine2.Engine
 {
@@ -48,11 +47,11 @@ namespace EntitledEngine2.Engine
 		//list for rendering all the sprites
 		private static List<Entity> e_list = new List<Entity>();
 
-		public static void RegisterSprite(Entity e)
+		public static void RegisterEntity(Entity e)
 		{
 			e_list.Add(e);
 		}
-		public static void UnRegisterSprite(Entity e)
+		public static void UnRegisterEntity(Entity e)
 		{
 			e_list.Remove(e);
 		}
@@ -155,10 +154,16 @@ namespace EntitledEngine2.Engine
 				}
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Abstract functions
-		public abstract void OnLoad();
+        #region Physics
+
+
+
+        #endregion
+
+        #region Abstract functions
+        public abstract void OnLoad();
 		public abstract void OnUpdate();
 		public abstract void OnDraw();
 

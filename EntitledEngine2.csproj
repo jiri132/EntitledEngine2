@@ -63,8 +63,10 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Engine\Components\Collider.cs" />
+    <Compile Include="Engine\Components\Rigidbody.cs" />
     <Compile Include="Engine\Components\Transform.cs" />
     <Compile Include="Engine\Core\Colliders\PlaneCollider.cs" />
+    <Compile Include="Engine\Core\Debug.cs" />
     <Compile Include="Engine\Core\ECS\Component.cs" />
     <Compile Include="Engine\Core\ECS\Destructor.cs" />
     <Compile Include="Engine\Core\ECS\Entity.cs" />
@@ -97,6 +99,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Engine\Core\Phyics\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
