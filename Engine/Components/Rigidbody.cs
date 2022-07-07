@@ -10,7 +10,7 @@ namespace EntitledEngine2.Engine.Core.Physics
         #region Rigidbody variables
         //Body
         public Vector2 Velocity = Vector2.Zero;
-        public float LossOfEnergy { private set; get; } = 20f;
+        public float LossOfEnergy { private set; get; } = 0f;
         public float Mass = 1;
         public float Gravity = 9.81f;
         //Rotation

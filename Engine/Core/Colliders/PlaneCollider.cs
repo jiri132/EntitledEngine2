@@ -31,19 +31,29 @@ namespace EntitledEngine2.Engine.Core.Colliders
 
         public bool PlaneCircle(Collider other)
         {
+            //Console.Clear();
+
             Vector2 circleDistance = new Vector2();
-            //float cornerDistance_sq;
-            circleDistance.x = this.position.x - other.position.x;
-            circleDistance.y = this.position.y - other.position.y;
 
-            if (circleDistance.x > (this.scale.x / 2 + other.radius)) { return false; }
-            if (circleDistance.y > (this.scale.y / 2 + other.radius)) { return false; }
+            circleDistance.x = position.x - other.position.x;
+            circleDistance.y = position.y - other.position.y;
 
-            if (circleDistance.x <= (this.scale.x / 2)) { return true; }
-            if (circleDistance.y <= (this.scale.y / 2)) { return true; }
+            Debug.Log(circleDistance.ToString());
+            Debug.Log((other.scale / 2).ToString());
+            if (circleDistance.x > (other.scale.x / 2 + this.radius)) { Debug.Log(1.ToString()); return false; }
+            if (circleDistance.y > (other.scale.y / 2 + this.radius)) { Debug.Log(2.ToString()); return false; }
 
-            double cornerDistance_sq = (int)(circleDistance.x - scale.x / 2) ^ 2 +
-                                 (int)(circleDistance.y - scale.y / 2) ^ 2;
+            if (circleDistance.x >= (other.scale.x / 2)) { Debug.Log(3.ToString()); return true; }
+            if (circleDistance.y >= (other.scale.y / 2)) { Debug.Log(4.ToString()); return true; }
+
+
+            double cornerDistance_sq = (int)(circleDistance.x - radius) ^ 2 +
+                                 (int)(circleDistance.y - radius) ^ 2;
+
+            Debug.Log(cornerDistance_sq.ToString());
+            Debug.Log(((int)other.radius ^ 2).ToString());
+
+            Debug.Log((cornerDistance_sq <= ((int)other.radius)).ToString());
 
             return (cornerDistance_sq <= ((int)other.radius ^ 2));
         }
