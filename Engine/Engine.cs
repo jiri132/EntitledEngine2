@@ -12,6 +12,9 @@ using matrix = EntitledEngine2.Engine.Core.Maths.Matrix;
 using EntitledEngine2.Engine.Core.Vec2;
 using EntitledEngine2.Engine.Core.Shapes;
 using EntitledEngine2.Engine.Core.ECS;
+using EntitledEngine2.Engine.Core.Physics;
+using EntitledEngine2.Engine.Core;
+using EntitledEngine2.Engine.Core.Colliders;
 
 namespace EntitledEngine2.Engine
 {
@@ -25,6 +28,8 @@ namespace EntitledEngine2.Engine
 
 	public abstract class Engine
 	{
+		
+		
 		#region Publics to change
 
 		//screen information
@@ -35,6 +40,7 @@ namespace EntitledEngine2.Engine
 		public Vector2 CameraPosition = Vector2.Zero; //position will automaticly go to the middle when the screen starts
 		public float CameraAngle = 0; //rotation of the camera in 2D on Z axis R to L
 
+		public static float deltaTime;
 		#endregion
 
 		#region Privates dont touch 
@@ -46,6 +52,11 @@ namespace EntitledEngine2.Engine
 
 		//list for rendering all the sprites
 		private static List<Entity> e_list = new List<Entity>();
+		private List<Rigidbody> r_list = new List<Rigidbody>(); 
+		private List<Collider> c_list = new List<Collider>();
+
+		DateTime time1 = DateTime.Now;
+		DateTime time2 = DateTime.Now;
 
 		public static void RegisterEntity(Entity e)
 		{
@@ -92,16 +103,34 @@ namespace EntitledEngine2.Engine
 
 		void GameLoop()
 		{
+			//load in entitys
 			OnLoad();
+			//get all the colliders and rigidbodys
+			getRigidbodys();
+			getColliders();
+			//check for possible collisions
+			CombinationCalculation();
 			Console.WriteLine("[APP] Game Data Loaded");
+
 			while (GameLoopThread.IsAlive)
 			{
 				try
 				{
 					OnDraw();
 
+					// This is it, use it where you want, it is time between
+					// two iterations of while loop
+					time2 = DateTime.Now;
+					deltaTime = (time2.Ticks - time1.Ticks) / 10000000f;
+					time1 = time2;
+
 					Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
 
+					//physics update
+					CombinationCalculation();
+					PhysicsUpdate();
+
+					//player code update
 					OnUpdate();
 
 					Thread.Sleep(8);
@@ -130,34 +159,154 @@ namespace EntitledEngine2.Engine
 
 			foreach (Entity et in e_list.ToArray())
 			{
-				Sprite[] s = et.GetSprites();
-                for (int x = 0; x < s.Length; x++)
-                {
-					//Pen p = new Pen(s.GetColor(),5);
-					SolidBrush b = new SolidBrush(s[x].GetColor());
+				Sprite s = et.GetSprite();
 
-					List<Point> points = new List<Point>();
-					for (int i = 0; i < s[x].GetDrawingPoints().Length; i++)
-					{
-						//get all points
-						Vector2 v = s[x].GetDrawingPoints()[i];
+				//Pen p = new Pen(s.GetColor(),5);
+				SolidBrush b = new SolidBrush(s.GetColor());
 
-						//make rotation
-						Vector2 rot = new Vector2();
-						rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
-						v = rot;
+				List<Point> points = new List<Point>();
+				for (int i = 0; i < s.GetDrawingPoints().Length; i++)
+				{
+					//get all points
+					Vector2 v = s.GetDrawingPoints()[i];
 
-						//add points postion anf into the drawing
-						points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
-					}
-					g.FillPolygon(b, points.ToArray());
+					//make rotation
+					Vector2 rot = new Vector2();
+					rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
+					v = rot;
+
+					//add points postion anf into the drawing
+					points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
 				}
+				g.FillPolygon(b, points.ToArray());
 			}
 		}
         #endregion
 
         #region Physics
+		class Combinations
+        {
+			public Combinations(Rigidbody rb, Collider col)
+            {
+				this.rb = rb;
+				this.col = col;
 
+				one = rb.ownEntity.name;
+				two = col.ownEntity.name;
+
+				//Debug.Log($"link between {rb.ownEntity.name} & {col.ownEntity.name}");
+            }
+
+			public string one;
+			public string two;
+
+			
+			public Rigidbody rb = null;
+			public Collider col = null;
+        }
+
+		private List<Combinations> combs = new List<Combinations>();
+
+        private void getRigidbodys()
+        {
+            foreach (Entity entity in e_list)
+            {
+				Rigidbody rb = entity.rigidbody;
+				//guard close to continue if the rigidbody is null
+				if (rb == null) { continue; }
+
+				r_list.Add(rb);
+            }
+			Debug.Log(r_list.Count.ToString());
+		}
+		private void getColliders()
+        {
+			foreach (Entity entity in e_list)
+			{
+				Collider col = entity.collider;
+				//guard close to continue if the collider is null
+				if (col == null) { continue; }
+
+				c_list.Add(col);
+			}
+			Debug.Log(c_list.Count.ToString());
+		}
+		private void CombinationCalculation()
+        {
+
+			combs.Clear();
+
+            //determine all combinations
+            foreach (Rigidbody rigidbody in r_list)
+            {
+				
+				if (rigidbody.ownCollider == null) { continue; }
+
+                foreach (Collider collider in c_list)
+                {
+					bool Double = false;
+					//dont check if its on the same object
+					if (rigidbody.ownCollider == collider) { continue; }
+
+					//checking if it is a duplicate
+					for (int i = 0; i < combs.ToArray().Length; i++)
+					{
+						if (combs[i].one == collider.ownEntity.name && combs[i].two == rigidbody.ownEntity.name)
+						{
+							Double = true;
+							break;
+						}
+					}
+					if (Double) { continue; }
+
+					if (rigidbody.position.x < collider.position.x + collider.scale.x &&
+						rigidbody.position.x + rigidbody.scale.x > collider.position.x)
+                    {
+						combs.Add(new Combinations(rigidbody,collider));
+                    }
+
+				}
+            }
+
+			//Debug.Log(combs.Count.ToString());
+        }
+		private void PhysicsUpdate()
+        {
+            foreach (Combinations combination in combs)
+            {
+				Rigidbody rb = combination.rb;
+				Collider col = combination.col;
+
+
+                if (rb.ownCollider.TestCollision(col))
+                {
+					Vector2 invVel = rb.Velocity * -1;
+
+					rb.Velocity = invVel * (1 - (rb.LossOfEnergy / 100));
+
+					rb.UpdateBody();
+
+					//Debug.Log("Acceleration " + rb.Acceleration * Engine.deltaTime);
+					//Debug.Log("Position: " + rb.position.ToString());
+
+					//Debug.Log("hitobjct");
+					continue;
+				}
+				
+				rb.Velocity.y += rb.Gravity;
+				rb.UpdateBody();
+
+				//simple old AABB
+				/*if (rb.position.x < col.position.x + col.scale.x &&
+					rb.position.x + rb.scale.x > col.position.x &&
+					rb.position.y < col.position.y + col.scale.y &&
+					rb.position.y + rb.scale.y > col.position.y)
+				{
+					//hit the object
+				}*/
+
+			}
+		} 
 
 
         #endregion

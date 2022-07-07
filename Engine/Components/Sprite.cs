@@ -14,9 +14,5 @@ namespace EntitledEngine2.Engine.Core.Shapes
 		public abstract Color GetColor();
 
 		public abstract void SetColor(Color color);
-
-		public override bool isCollider() => false;
-		public override bool isSprite() => true;
-		public override bool isRigidbody() => false;
 	}
 }

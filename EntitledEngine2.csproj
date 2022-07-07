@@ -65,6 +65,7 @@
     <Compile Include="Engine\Components\Collider.cs" />
     <Compile Include="Engine\Components\Rigidbody.cs" />
     <Compile Include="Engine\Components\Transform.cs" />
+    <Compile Include="Engine\Core\Colliders\CircleCollider.cs" />
     <Compile Include="Engine\Core\Colliders\PlaneCollider.cs" />
     <Compile Include="Engine\Core\Debug.cs" />
     <Compile Include="Engine\Core\ECS\Component.cs" />

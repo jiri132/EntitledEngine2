@@ -5,6 +5,7 @@ using System.Drawing;
 using EntitledEngine2.Engine.Core.Vec2;
 using EntitledEngine2.Engine.Core.ECS;
 using EntitledEngine2.Engine.Core.Shapes;
+using EntitledEngine2.Engine.Core.Colliders;
 
 namespace EntitledEngine2
 {
@@ -13,8 +14,10 @@ namespace EntitledEngine2
 
 		public App() : base(new Vector2(528, 550), "Entitled Engine Demo") { }
 
-		Entity a = new Entity("a");
-		Entity b = new Entity("b");
+		Entity a = new Entity("a", EntityType.Physics);
+		Entity b = new Entity("floor", EntityType.Collider);
+
+		Entity Debugger = new Entity("deugger", EntityType.Sprite);
 		public override void OnDraw()
 		{
 			
@@ -26,25 +29,22 @@ namespace EntitledEngine2
 
 			//setting the components values
 			a.transform.Scale = new Vector2(60,60);
-			a.AddComponent(Component_TYPE.SPRITE);
 			a.SetSprite(new Circle(Color.Blue, ""));
-			a.AddComponent(Component_TYPE.COLLIDER);
+			a.SetCollider(ColliderType.Circle);
 
-			b.transform.Scale = new Vector2(30, 30);
-			b.transform.Position = new Vector2(100, 100);
-			b.AddComponent(Component_TYPE.SPRITE);
-			b.getSprite.SetColor(Color.White);
-			b.AddComponent(Component_TYPE.COLLIDER);
+			b.transform.Position = new Vector2(0,500);
+			b.transform.Scale = new Vector2(200, 30);
 		}
 
 		float i;
-		float j;
 		public override void OnUpdate()
 		{
-			i += 0.01f;
-			j += 0.034f;
-			a.transform.Rotate(i);
-			b.transform.Rotate(j);
+			/*i += 0.01f;
+			Debugger.transform.Position = a.transform.Position;
+			//Debugger.transform.Scale = a.transform.Scale * 1.5f;
+			Debugger.transform.Scale.y = a.transform.Scale.xy;
+			Debugger.transform.Scale.x = a.transform.Scale.xy;
+			//Debugger.transform.Rotate(i);*/
 		}
 
 		public override void GetKeyDown(KeyEventArgs key)

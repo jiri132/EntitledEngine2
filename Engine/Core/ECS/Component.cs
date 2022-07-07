@@ -6,11 +6,5 @@
         SPRITE, COLLIDER, RIGIDBODY
     }
 
-    public abstract class Component
-    {
-        public abstract bool isSprite();
-        public abstract bool isCollider();
-        public abstract bool isRigidbody();
-
-    }
+    public abstract class Component {}
 }
