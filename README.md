@@ -30,7 +30,8 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 
 # Some Clips of what I've made with the engine so far
 Rotations Rendering (slow frame rate because of gif conversion)<br>
-![](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotation.gif)
+![Rotation test GIF](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotation.gif)
+![Physics Bounce](https://user-images.githubusercontent.com/76393975/178001249-c48a477b-4dd2-45ca-9ca0-00fba1ff11cc.gif)
 
 
 
