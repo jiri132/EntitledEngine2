@@ -294,6 +294,8 @@ namespace EntitledEngine2.Engine
 						Vector2 part2 = Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2);
 						Vector2 part3 = (rb.position - col.position);
 
+						//multiplie these 2 parts and you get a really weird answer back
+						//when converting to ints it got overflown which it shouldn't
 						Debug.Log(part2.ToString());
 						Debug.Log(part3.ToString());
 
