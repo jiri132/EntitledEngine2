@@ -15,6 +15,7 @@ using EntitledEngine2.Engine.Core.ECS;
 using EntitledEngine2.Engine.Core.Physics;
 using EntitledEngine2.Engine.Core;
 using EntitledEngine2.Engine.Core.Colliders;
+using EntitledEngine2.Engine.Core.Maths;
 
 namespace EntitledEngine2.Engine
 {
@@ -280,21 +281,42 @@ namespace EntitledEngine2.Engine
 
                 if (rb.ownCollider.TestCollision(col))
                 {
-					Vector2 invVel = rb.Velocity * -1;
+					
+					//solve the collidings
+					if (col.ownEntity.rigidbody == null)
+                    {
+						float m2 = 1f;
+						Vector2 v2 = new Vector2(0,0);
 
-					rb.Velocity = invVel * (1 - (rb.LossOfEnergy / 100));
+						//only do the velocity for v1
 
-					rb.UpdateBody();
+						float part1 = 2 * m2 / (rb.Mass + m2);
+						Vector2 part2 = Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2);
+						Vector2 part3 = (rb.position - col.position);
 
-					//Debug.Log("Acceleration " + rb.Acceleration * Engine.deltaTime);
-					//Debug.Log("Position: " + rb.position.ToString());
+						Debug.Log(part2.ToString());
+						Debug.Log(part3.ToString());
 
-					//Debug.Log("hitobjct");
+						rb.Velocity = rb.Velocity - (2 * m2 / (rb.Mass + m2)) * (Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2)) * (rb.position - col.position);
+						//rb.Velocity = rb.Velocity - part1 * part2 * part3;
+
+						Debug.Log("vel after" + rb.Velocity.ToString());
+                    }else
+                    {
+						Rigidbody rb2 = col.ownEntity.rigidbody;
+
+						rb.Velocity  = rb.Velocity  - 2 * rb2.Mass/ (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb.Velocity - rb2.Velocity), (rb.position - rb2.position)) / (Vector2.Normalized(rb.position - rb2.position) * 2)) * (rb.position - rb2.position);
+						rb2.Velocity = rb2.Velocity - 2 * rb.Mass / (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb2.Velocity - rb.Velocity), (rb2.position - rb.position)) / (Vector2.Normalized(rb2.position - rb.position) * 2)) * (rb2.position - rb.position);
+
+						Debug.Log(rb.Velocity.ToString());
+						Debug.Log(rb2.Velocity.ToString());
+
+					}
+
+					Debug.Log("hitobjct");
 					continue;
 				}
 				
-				rb.Velocity.y += rb.Gravity;
-				rb.UpdateBody();
 
 				//simple old AABB
 				/*if (rb.position.x < col.position.x + col.scale.x &&
@@ -306,7 +328,20 @@ namespace EntitledEngine2.Engine
 				}*/
 
 			}
-		} 
+
+            foreach (Rigidbody rb in r_list)
+            {
+				Debug.Log("Velocity : " + rb.Velocity.ToString());
+				Debug.Log("Position : " + rb.position.ToString() + "\n");
+
+				rb.Velocity.y += rb.Gravity;
+				rb.UpdateBody();
+			}
+			
+
+		}
+
+
 
 
         #endregion

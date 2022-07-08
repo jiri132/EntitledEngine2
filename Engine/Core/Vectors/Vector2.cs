@@ -93,11 +93,29 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		}
 		public static Vector2 operator *(Vector2 v1, Vector2 v2)
 		{
-			return new Vector2(v1.x * v2.x, v1.y * v2.y);
+			float x1 = v1.x;
+			float x2 = v2.x;
+
+			float y1 = v1.y;
+			float y2 = v2.y;
+
+			Vector2 returnVec = new Vector2(x1 * x2, y1 * y2);
+
+			//Debug.Log($"{y2} * {y1} = {y2 * y1}");
+
+			if (x1 == 0 || x2 == 0) { returnVec.x = 0; }
+			if (y1 == 0 || y2 == 0) { returnVec.y = 0; }
+
+			return returnVec;
+			//return new Vector2(v1.x * v2.x, v1.y * v2.y);
 		}
 		public static Vector2 operator *(Vector2 v1, float v2)
 		{
 			return new Vector2(v1.x * v2, v1.y * v2);
+		}
+		public static Vector2 operator *(float v1, Vector2 v2)
+		{
+			return new Vector2(v1 * v2.x, v1 * v2.y);
 		}
 		public static Vector2 operator /(Vector2 v1, Vector2 v2)
 		{
@@ -106,6 +124,14 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		public static Vector2 operator /(Vector2 v1, float v2)
 		{
 			return new Vector2(v1.x / v2, v1.y / v2);
+		}
+		public static Vector2 operator /(float v1, Vector2 v2)
+		{
+			Vector2 v = new Vector2(v1 / v2.x, v1 / v2.y);
+			if (v.x == float.NaN) { v.x = 0; }
+			if (v.y == float.NaN) { v.y = 0; }
+
+			return v;
 		}
 		public override bool Equals(object obj)
 		{
@@ -127,7 +153,7 @@ namespace EntitledEngine2.Engine.Core.Vec2
 
 		public static Vector2 Normalized(Vector2 a)
 		{
-			if (Mathf.magnitude(a) > 0)
+			if (Mathf.Magnitude(a) > 0)
 			{
 				return Mathf.Divide(a);
 			}

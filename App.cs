@@ -17,7 +17,6 @@ namespace EntitledEngine2
 		Entity a = new Entity("a", EntityType.Physics);
 		Entity b = new Entity("floor", EntityType.Collider);
 
-		Entity Debugger = new Entity("deugger", EntityType.Sprite);
 		public override void OnDraw()
 		{
 			
@@ -36,15 +35,9 @@ namespace EntitledEngine2
 			b.transform.Scale = new Vector2(200, 30);
 		}
 
-		float i;
 		public override void OnUpdate()
 		{
-			/*i += 0.01f;
-			Debugger.transform.Position = a.transform.Position;
-			//Debugger.transform.Scale = a.transform.Scale * 1.5f;
-			Debugger.transform.Scale.y = a.transform.Scale.xy;
-			Debugger.transform.Scale.x = a.transform.Scale.xy;
-			//Debugger.transform.Rotate(i);*/
+			//b.rigidbody.Gravity = 0f;
 		}
 
 		public override void GetKeyDown(KeyEventArgs key)

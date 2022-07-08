@@ -43,22 +43,22 @@ namespace EntitledEngine2.Engine.Core.Colliders
             circleDistance.x = position.x - other.position.x;
             circleDistance.y = position.y - other.position.y;
 
-            Debug.Log(circleDistance.ToString());
-            Debug.Log((other.scale / 2).ToString());
-            if (circleDistance.x > (other.scale.x / 2 + this.radius)) { Debug.Log(1.ToString()); return false; }
-            if (circleDistance.y > (other.scale.y / 2 + this.radius)) { Debug.Log(2.ToString()); return false; }
+          //  Debug.Log(circleDistance.ToString());
+           // Debug.Log((other.scale / 2).ToString());
+            if (circleDistance.x > (other.scale.x / 2 + this.radius)) { /*Debug.Log(1.ToString());*/ return false; }
+            if (circleDistance.y > (other.scale.y / 2 + this.radius)) { /*Debug.Log(2.ToString());*/ return false; }
 
-            if (circleDistance.x >= (other.scale.x / 2)) { Debug.Log(3.ToString()); return true; }
-            if (circleDistance.y >= (other.scale.y / 2)) { Debug.Log(4.ToString()); return true; }
+            if (circleDistance.x >= (other.scale.x / 2)) { /*Debug.Log(3.ToString());*/ return true; }
+            if (circleDistance.y >= (other.scale.y / 2)) { /*Debug.Log(4.ToString());*/ return true; }
 
 
             double cornerDistance_sq = (int)(circleDistance.x - radius) ^2 +
                                  (int)(circleDistance.y - radius ) ^2;
 
-            Debug.Log(cornerDistance_sq.ToString());
-            Debug.Log(((int)other.radius ^ 2).ToString());
+           // Debug.Log(cornerDistance_sq.ToString());
+           // Debug.Log(((int)other.radius ^ 2).ToString());
 
-            Debug.Log((cornerDistance_sq <= ((int)other.radius)).ToString());
+           // Debug.Log((cornerDistance_sq <= ((int)other.radius)).ToString());
 
             return (cornerDistance_sq <= ((int)other.radius ^ 2));
         }
