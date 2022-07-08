@@ -142,7 +142,20 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		}
 		public static Vector2 operator /(Vector2 v1, Vector2 v2)
 		{
-			return new Vector2(v1.x / v2.x, v1.y / v2.y);
+			float x1 = v1.x;
+			float x2 = v2.x;
+
+			float y1 = v1.y;
+			float y2 = v2.y;
+
+			Vector2 returnVec = new Vector2((double)(x1 / x2), (double)(y1 / y2));
+
+			//Debug.Log($"{y1} * {y2} = {y1 * y2}");
+
+			if (x1 == 0 || x2 == 0) { returnVec.x = 0; }
+			if (y1 == 0 || y2 == 0) { returnVec.y = 0; }
+
+			return returnVec;
 		}
 		public static Vector2 operator /(Vector2 v1, float v2)
 		{
@@ -156,8 +169,9 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		public static Vector2 operator /(float v1, Vector2 v2)
 		{
 			Vector2 v = new Vector2(v1 / v2.x, v1 / v2.y);
-			if (v.x == float.NaN) { v.x = 0; }
-			if (v.y == float.NaN) { v.y = 0; }
+			if (v.x == 0) { v.x = 0; }
+			if (v.y == 0) { v.y = 0; }
+			if (v1 == 0) { v = Vector2.Zero; }
 
 			return v;
 		}

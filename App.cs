@@ -26,17 +26,17 @@ namespace EntitledEngine2
 			BackgroundColor = Color.Black;
 
 			//setting the components values
-			a.transform.Scale = new Vector2(60,60);
+			a.transform.Scale = new Vector2(30,30);
 			a.SetSprite(new Circle(Color.Blue, ""));
 			a.SetCollider(ColliderType.Circle);
-			a.rigidbody.Velocity = new Vector2(0,0);
+			a.rigidbody.Velocity = new Vector2(200,0);
 			a.rigidbody.Gravity  = 9.81f;
 
-			b.transform.Position = new Vector2(-50, -50);
+			b.transform.Position = new Vector2(-100, -100);
 			b.transform.Scale = new Vector2(60, 60);
 			b.SetSprite(new Circle(Color.Green, ""));
 			b.SetCollider(ColliderType.Circle);
-			b.rigidbody.Velocity = new Vector2(-10, -10);
+			b.rigidbody.Velocity = new Vector2(-200, 0);
 			b.rigidbody.Gravity = 9.81f;
 		}
 
