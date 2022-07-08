@@ -28,13 +28,6 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Sound System | ❌ | ❌ |
 | Unit to Pixel | ✅ | ❌ |
 
-# Some Clips of what I've made with the engine so far
-Rotations Rendering (slow frame rate because of gif conversion)<br>
-![Rotation test GIF](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotation.gif)
-![Physics Bounce](https://user-images.githubusercontent.com/76393975/178001249-c48a477b-4dd2-45ca-9ca0-00fba1ff11cc.gif)
-
-
-
 # Diffuculties I faced during development
 ### Inheritence 
 While working on the ECS (Entity Component System) I have faced amyn problems that something in the list wasn't the same type as the foreach loop requested or,it was just null because I removed itself without removing the component in the list of the entity.<br>
@@ -60,3 +53,10 @@ This also chenges the rendering look of the application / game to a pixelated vi
 All the physics that are gonna be calculated are gonne be used with point of collision, then it doens't matter what kind of shape it is because it looks for a point of the deepest intersection.<br>
 And then with verlets solution it resolves all the things that should happend to both entities.<br>
 and then collision checks have been optimized to be on just the X axis and deletes all duplicate collision tests.<br>
+
+# Some Clips of what I've made with the engine so far
+Rotations Rendering (slow frame rate because of gif conversion)<br>
+![Rotation test GIF](http://jiri.dscloud.me/GIT_README/EntitledEngine2/Rotation.gif)
+Some one of my Physics tests
+![Physics Bounce](https://user-images.githubusercontent.com/76393975/178001249-c48a477b-4dd2-45ca-9ca0-00fba1ff11cc.gif)
+
