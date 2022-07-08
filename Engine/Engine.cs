@@ -281,7 +281,6 @@ namespace EntitledEngine2.Engine
 
                 if (rb.ownCollider.TestCollision(col))
                 {
-					
 					//solve the collidings
 					if (col.ownEntity.rigidbody == null)
                     {
@@ -290,25 +289,67 @@ namespace EntitledEngine2.Engine
 
 						//only do the velocity for v1
 
-						float part1 = 2 * m2 / (rb.Mass + m2);
-						Vector2 part2 = Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2);
+						float part1 = (2 * m2) / (rb.Mass + m2);
+						Vector2 part2 = Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * Vector2.Normalized(rb.position - col.position));
 						Vector2 part3 = (rb.position - col.position);
 
 						//multiplie these 2 parts and you get a really weird answer back
 						//when converting to ints it got overflown which it shouldn't
+						Debug.Log(part1.ToString());
 						Debug.Log(part2.ToString());
 						Debug.Log(part3.ToString());
 
-						rb.Velocity = rb.Velocity - (2 * m2 / (rb.Mass + m2)) * (Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2)) * (rb.position - col.position);
-						//rb.Velocity = rb.Velocity - part1 * part2 * part3;
+						Debug.Log((part2 * part3) .ToString());
+
+						//rb.Velocity = rb.Velocity - (2 * m2 / (rb.Mass + m2)) * (Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2)) * (rb.position - col.position);
+						rb.Velocity = rb.Velocity - part1 * part2 * part3;
 
 						Debug.Log("vel after" + rb.Velocity.ToString());
                     }else
                     {
 						Rigidbody rb2 = col.ownEntity.rigidbody;
 
-						rb.Velocity  = rb.Velocity  - 2 * rb2.Mass/ (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb.Velocity - rb2.Velocity), (rb.position - rb2.position)) / (Vector2.Normalized(rb.position - rb2.position) * 2)) * (rb.position - rb2.position);
-						rb2.Velocity = rb2.Velocity - 2 * rb.Mass / (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb2.Velocity - rb.Velocity), (rb2.position - rb.position)) / (Vector2.Normalized(rb2.position - rb.position) * 2)) * (rb2.position - rb.position);
+
+						//get toal energy before
+						//divide the energy in to who has what
+						//apply the multipliers to the correct rigidbodys
+						Vector2 KE1B = (rb.Velocity * rb.Mass < 0) ? rb.Velocity * rb.Mass * -1 : rb.Velocity * rb.Mass, KE2B = (rb2.Velocity * rb2.Mass < 0) ? rb2.Velocity * rb2.Mass * -1 : rb2.Velocity * rb2.Mass;
+
+						Vector2 totalKineticEnergyBefore = KE1B + KE2B;
+
+						//get new energies
+						Vector2 vel1After = rb.Velocity  - (2 * rb2.Mass)/ (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb.Velocity - rb2.Velocity), (rb.position - rb2.position)) / (Vector2.Normalized(rb.position - rb2.position) * Vector2.Normalized(rb.position - rb2.position))) * (rb.position - rb2.position);
+						Vector2 vel2After = rb2.Velocity - (2 * rb.Mass) / (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb2.Velocity - rb.Velocity), (rb2.position - rb.position)) / (Vector2.Normalized(rb2.position - rb.position) * Vector2.Normalized(rb2.position - rb.position))) * (rb2.position - rb.position);
+
+						Vector2 KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass, KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
+
+
+						//check how much each velocity has energy
+						Vector2 totalKineticEnergyAfter = KE1A + KE2A;
+
+						Debug.Log($"velocity 1: {vel1After} velocity 2: {vel2After}");
+
+
+						//Vector2 KE1P = KE1 / totalKineticEnergyAfter, KE2P = KE2 / totalKineticEnergyAfter;
+
+						Debug.Log($"\nbefore collision KE: {totalKineticEnergyBefore} \nAfter collision KE {totalKineticEnergyAfter} \nDifference: {totalKineticEnergyBefore / totalKineticEnergyAfter} After Difference: {totalKineticEnergyAfter * (totalKineticEnergyBefore / totalKineticEnergyAfter)}");
+
+						Vector2 multiplierDifference = totalKineticEnergyAfter / totalKineticEnergyBefore;
+						vel1After /= multiplierDifference;
+						vel2After /= multiplierDifference;
+						
+						//new kinetic energy limited to the same amount before
+						KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass;
+						KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
+						totalKineticEnergyAfter = KE1A + KE2A;
+
+						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}",ConsoleColor.Blue);
+
+						//making the kinetic energy also on the velocitys
+						rb.Velocity = KE1A;
+						rb2.Velocity = KE2A;
+
+
 
 						Debug.Log(rb.Velocity.ToString());
 						Debug.Log(rb2.Velocity.ToString());
@@ -333,8 +374,19 @@ namespace EntitledEngine2.Engine
 
             foreach (Rigidbody rb in r_list)
             {
-				Debug.Log("Velocity : " + rb.Velocity.ToString());
-				Debug.Log("Position : " + rb.position.ToString() + "\n");
+				if(rb.position.x - rb.ownCollider.radius < -ScreenSize.x || rb.position.x + rb.ownCollider.radius > ScreenSize.x )
+                {
+					rb.Velocity.x *= -1;
+                }
+				if (rb.position.y - rb.ownCollider.radius < -ScreenSize.y || rb.position.y + rb.ownCollider.radius > ScreenSize.y)
+				{
+					rb.Velocity.y *= -1;
+				}
+
+
+
+				//Debug.Log($"[{rb.ownEntity.name}] Velocity : " + rb.Velocity.ToString());
+				//Debug.Log($"[{rb.ownEntity.name}] Position : " + rb.position.ToString() + "\n");
 
 				rb.Velocity.y += rb.Gravity;
 				rb.UpdateBody();

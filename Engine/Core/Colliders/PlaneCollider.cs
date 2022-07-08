@@ -55,7 +55,7 @@ namespace EntitledEngine2.Engine.Core.Colliders
 
             //Debug.Log((cornerDistance_sq <= ((int)other.radius)).ToString());
 
-            return (cornerDistance_sq <= ((int)other.radius ^ 2));
+            return (cornerDistance_sq >= ((int)other.radius ^ 2) );
         }
         public bool PlanePlane(Collider other)
         {

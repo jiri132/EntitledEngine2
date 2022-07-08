@@ -52,6 +52,28 @@ namespace EntitledEngine2.Engine.Core.Vec2
 			return $"[ {x}, {y} ]";
 		}
 
+		public static bool operator <(Vector2 v1, float v2)
+		{
+			if (v1.x < v2 && v1.y < v2)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public static bool operator >(Vector2 v1, float v2)
+		{
+			if (v1.x > v2 && v1.y > v2)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 		public static bool operator ==(Vector2 v1, Vector2 v2)
 		{
 			if (v1.x == v2.x && v1.y == v2.y)
@@ -91,6 +113,7 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		{
 			return new Vector2(v1.x - v2, v1.y - v2);
 		}
+
 		public static Vector2 operator *(Vector2 v1, Vector2 v2)
 		{
 			float x1 = v1.x;
@@ -99,9 +122,9 @@ namespace EntitledEngine2.Engine.Core.Vec2
 			float y1 = v1.y;
 			float y2 = v2.y;
 
-			Vector2 returnVec = new Vector2(x1 * x2, y1 * y2);
+			Vector2 returnVec = new Vector2((double)(x1 * x2), (double)(y1 * y2));
 
-			//Debug.Log($"{y2} * {y1} = {y2 * y1}");
+			//Debug.Log($"{y1} * {y2} = {y1 * y2}");
 
 			if (x1 == 0 || x2 == 0) { returnVec.x = 0; }
 			if (y1 == 0 || y2 == 0) { returnVec.y = 0; }
@@ -123,7 +146,12 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		}
 		public static Vector2 operator /(Vector2 v1, float v2)
 		{
-			return new Vector2(v1.x / v2, v1.y / v2);
+			Vector2 v = new Vector2(v1.x / v2, v1.y / v2);
+			if (v.x == 0) { v.x = 0; }
+			if (v.y == 0) { v.y = 0; }
+			if (v2 == 0) { v = Vector2.Zero; }
+
+			return v;
 		}
 		public static Vector2 operator /(float v1, Vector2 v2)
 		{

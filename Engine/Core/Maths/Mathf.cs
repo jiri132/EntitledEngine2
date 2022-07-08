@@ -27,17 +27,15 @@ namespace EntitledEngine2.Engine.Core.Maths
 
         public static float InnerProduct(Vector2 a, Vector2 b)
         {
-            double product = a.x * b.x + a.y * b.y;
+            double determinant = (a.x * b.x + a.y * b.y) / 1000;
 
-            //Debug.Log(a.y.ToString() + "< a | b >" +  b.y.ToString());
+           // Debug.Log(a.y.ToString() + "< a | b >" +  b.y.ToString());
 
             //Debug.Log((a.x * b.x).ToString() + " | " + (a.y * b.y).ToString());
 
-            double x = Vector.Determinant(new Vector(a.x,a.y),new Vector(b.x,b.y));
+            //Debug.Log(determinant.ToString());
 
-            product = product / x;
-
-            return (float)product;
+            return (float)determinant;
         }
 
 
