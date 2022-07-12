@@ -16,6 +16,7 @@ using EntitledEngine2.Engine.Core.Physics;
 using EntitledEngine2.Engine.Core;
 using EntitledEngine2.Engine.Core.Colliders;
 using EntitledEngine2.Engine.Core.Maths;
+using EntitledEngine2.Engine.Core.UI;
 
 namespace EntitledEngine2.Engine
 {
@@ -38,7 +39,7 @@ namespace EntitledEngine2.Engine
 		public static Color BackgroundColor = Color.Beige;
 
 		public Vector2 CameraZoom = new Vector2(.5f, .5f); //dont really mess with the camera zoom it is not really needed
-		public Vector2 CameraPosition = Vector2.Zero; //position will automaticly go to the middle when the screen starts
+		public static Vector2 CameraPosition = Vector2.Zero; //position will automaticly go to the middle when the screen starts
 		public float CameraAngle = 0; //rotation of the camera in 2D on Z axis R to L
 
 		public static float deltaTime;
@@ -53,6 +54,7 @@ namespace EntitledEngine2.Engine
 
 		//list for rendering all the sprites
 		private static List<Entity> e_list = new List<Entity>();
+		private static List<UI> ui_list = new List<UI>();
 		private List<Rigidbody> r_list = new List<Rigidbody>(); 
 		private List<Collider> c_list = new List<Collider>();
 
@@ -67,6 +69,15 @@ namespace EntitledEngine2.Engine
 		{
 			e_list.Remove(e);
 		}
+		public static void RegisterUI(UI e)
+		{
+			ui_list.Add(e);
+		}
+		public static void UnRegisterUI(UI e)
+		{
+			ui_list.Remove(e);
+		}
+
 		#endregion
 
 
@@ -104,6 +115,7 @@ namespace EntitledEngine2.Engine
 
 		void GameLoop()
 		{
+			CameraPosition += new Vector2((ScreenSize.x - 16) / 2, (ScreenSize.y - 38) /2);
 			//load in entitys
 			OnLoad();
 			//get all the colliders and rigidbodys
@@ -141,7 +153,7 @@ namespace EntitledEngine2.Engine
 					if (!Window.Visible)
 					{
 						Console.WriteLine(e.ToString());
-						Application.Exit();
+						Environment.Exit(1);
 					}
 				}
 			}
@@ -155,9 +167,14 @@ namespace EntitledEngine2.Engine
 
 			g.Clear(BackgroundColor);
 
-			g.TranslateTransform(CameraPosition.x + 256, CameraPosition.y + 256);
+			g.TranslateTransform(CameraPosition.x/* + 256*/, CameraPosition.y/* + 256*/);
 			g.RotateTransform(CameraAngle);
 			g.ScaleTransform(CameraZoom.x, CameraZoom.y);
+
+			
+
+
+			
 
 			foreach (Entity et in e_list.ToArray())
 			{
@@ -204,7 +221,26 @@ namespace EntitledEngine2.Engine
 					g.FillPolygon(b, points.ToArray());
 				}
 			}
+
+			foreach (UI uI in ui_list.ToArray())
+			{
+				drawUI(uI, g);
+			}
 		}
+		void drawUI(UI ui, Graphics e)
+		{
+			if (ui.GetType() == UI_TYPE.TEXT)
+            {
+				Text t = ui.getText();
+
+				Font drawFont = new Font("Arial", 16);
+				SolidBrush drawBrush = new SolidBrush(Color.White);
+
+				e.DrawString(t.text,drawFont,drawBrush,t.clampedPosition.x,t.clampedPosition.y);
+			}
+			
+		}
+
 		#endregion
 
 		#region Physics
@@ -380,6 +416,8 @@ namespace EntitledEngine2.Engine
 
 					}
 
+					OnCollision(col);
+
 					Debug.Log("hitobjct");
 					continue;
 				}
@@ -400,10 +438,12 @@ namespace EntitledEngine2.Engine
             {
 				if(rb.position.x - rb.ownCollider.radius < -ScreenSize.x || rb.position.x + rb.ownCollider.radius > ScreenSize.x )
                 {
+					OnCollision(null);
 					rb.Velocity.x *= -1;
                 }
 				if (/*rb.position.y - rb.ownCollider.radius < -ScreenSize.y ||*/ rb.position.y + rb.ownCollider.radius > ScreenSize.y)
 				{
+					OnCollision(null);
 					rb.Velocity.y *= -1;
 				}
 
@@ -429,7 +469,9 @@ namespace EntitledEngine2.Engine
 		public abstract void OnUpdate();
 		public abstract void OnDraw();
 
-		
+		public abstract void OnCollision(Collider other);
+
+
 		public abstract void GetKeyDown(KeyEventArgs e);
 		public abstract void GetKeyUp(KeyEventArgs e);
 		#endregion
