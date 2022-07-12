@@ -3,8 +3,8 @@
 
     public enum Component_TYPE
     {
-        SPRITE, COLLIDER, RIGIDBODY
+        SPRITE_RENDERER, COLLIDER, RIGIDBODY, LINE_RENDERER
     }
 
-    public abstract class Component {}
+    public interface Component {}
 }

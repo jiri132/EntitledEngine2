@@ -3,9 +3,8 @@ using System.Drawing;
 
 using EntitledEngine2.Engine.Core.Colliders;
 using EntitledEngine2.Engine.Core.Shapes;
-using EntitledEngine2.Engine.Core.Vec2;
-using EntitledEngine2.Engine.Components;
 using EntitledEngine2.Engine.Core.Physics;
+using EntitledEngine2.Engine.Components;
 
 
 public enum EntityType
@@ -20,14 +19,21 @@ namespace EntitledEngine2.Engine.Core.ECS
     /// </summary>
     public class Entity
     {
+        #region Publics
+
         public string name { private set; get; }
         public Transform transform { private set; get; }
+        #endregion
 
-        private Sprite sprite;
+        #region Privates
+        public SpriteRenderer spriteRenderer { private set; get; }
+        public LineRenderer lineRenderer { private set; get; }
+
         public Rigidbody rigidbody { private set; get; }
         public Collider collider { private set; get; }
 
 
+        #endregion
 
         public Entity(string name, EntityType type = EntityType.Clean)
         {
@@ -38,18 +44,18 @@ namespace EntitledEngine2.Engine.Core.ECS
             {
                 case EntityType.Physics:
                     Debug.Log($"automaticly added compenets for {name}");
-                    AddComponent(Component_TYPE.SPRITE);
+                    AddComponent(Component_TYPE.SPRITE_RENDERER);
                     AddComponent(Component_TYPE.COLLIDER);
                     AddComponent(Component_TYPE.RIGIDBODY);
                     break;
                 case EntityType.Collider:
                     Debug.Log($"automaticly added compenets for {name}");
-                    AddComponent(Component_TYPE.SPRITE);
+                    AddComponent(Component_TYPE.SPRITE_RENDERER);
                     AddComponent(Component_TYPE.COLLIDER);
                     break;
                 case EntityType.Sprite:
                     Debug.Log($"automaticly added compenets for {name}");
-                    AddComponent(Component_TYPE.SPRITE);
+                    AddComponent(Component_TYPE.SPRITE_RENDERER);
                     break;
                 case EntityType.Clean:
                     Debug.Log($"no automatic compenet adding for {name}");
@@ -66,10 +72,9 @@ namespace EntitledEngine2.Engine.Core.ECS
         {
             switch (t)
             {
-                case Component_TYPE.SPRITE:
-                    
-                    sprite = new Plane(Color.Red, "Default");
-                    Debug.Log($"Added default red Plane for - {name}");
+                case Component_TYPE.SPRITE_RENDERER:
+                    spriteRenderer = new Plane(Color.Red, "Default");
+                    Debug.Log($"Added default red Plane for     - {name}");
                     break;
                 case Component_TYPE.COLLIDER:
                     collider = new PlaneCollider(this);
@@ -77,8 +82,12 @@ namespace EntitledEngine2.Engine.Core.ECS
                     break;
                 case Component_TYPE.RIGIDBODY:
                     rigidbody = new Rigidbody(this);
-                    Debug.Log($"Added default rigidbody for - {name}");
+                    Debug.Log($"Added default rigidbody for     - {name}");
                     break;
+                case Component_TYPE.LINE_RENDERER:
+                    lineRenderer = new Line(Color.White);
+                    Debug.Log($"Added default LineRenderer for  - {name}");
+                    break;  
                 default:
                     break;
             }
@@ -88,8 +97,8 @@ namespace EntitledEngine2.Engine.Core.ECS
 		{
             switch (T)
             {
-                case Component_TYPE.SPRITE:
-                    sprite = null;
+                case Component_TYPE.SPRITE_RENDERER:
+                    spriteRenderer = null;
                     break;
                 case Component_TYPE.COLLIDER:
                     collider = null;
@@ -102,11 +111,11 @@ namespace EntitledEngine2.Engine.Core.ECS
             }
         }
         
-		public void SetSprite(Sprite s)
+		public void SetSprite(SpriteRenderer s)
         {
             Debug.Log($"Changing sprites for {name}");
-            DisposeComponent(Component_TYPE.SPRITE);
-            sprite = s;
+            DisposeComponent(Component_TYPE.SPRITE_RENDERER);
+            spriteRenderer = s;
         }
         public void SetCollider(ColliderType type)
         {
@@ -143,9 +152,9 @@ namespace EntitledEngine2.Engine.Core.ECS
         }
 
 
-        public Sprite GetSprite()
+        public SpriteRenderer GetSprite()
         {
-            return sprite;
+            return spriteRenderer;
         }
         public Collider GetCollider()
         {
