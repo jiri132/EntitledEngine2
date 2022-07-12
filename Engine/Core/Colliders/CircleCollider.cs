@@ -108,5 +108,7 @@ namespace EntitledEngine2.Engine.Core.Colliders
         {
             return _ownEntity.transform.Scale.xy / 2;
         }
+
+        
     }
 }

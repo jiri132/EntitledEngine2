@@ -69,7 +69,7 @@ namespace EntitledEngine2.Engine.Core.Colliders
             return false;
         }
 
-
+       
         public override ColliderType type()
         {
             return ColliderType.Plane;

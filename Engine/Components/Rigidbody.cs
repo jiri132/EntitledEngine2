@@ -50,6 +50,8 @@ namespace EntitledEngine2.Engine.Core.Physics
             LossOfEnergy = LOE;
         }
 
+        
+
         public Vector2 position => ownEntity.transform.Position;
         public Vector2 scale => ownEntity.transform.Scale;
     }
