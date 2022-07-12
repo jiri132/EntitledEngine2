@@ -7,6 +7,13 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		public float x;
 		public float y;
 
+		public Vector2 Positive()
+        {
+			if (this.x < 0) { x *= -1; }
+			if (this.y < 0) { y *= -1; }
+			return new Vector2(x, y);
+		}
+
 		#region Declarations
 		public Vector2(int x, int y)
 		{

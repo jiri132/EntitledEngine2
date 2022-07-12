@@ -141,6 +141,7 @@ namespace EntitledEngine2.Engine
 					if (!Window.Visible)
 					{
 						Console.WriteLine(e.ToString());
+						Application.Exit();
 					}
 				}
 			}
@@ -160,31 +161,53 @@ namespace EntitledEngine2.Engine
 
 			foreach (Entity et in e_list.ToArray())
 			{
-				Sprite s = et.GetSprite();
+				if (et.lineRenderer != null)
+                {
+					Pen p = new Pen(et.lineRenderer.GetLineColor(),4);
 
-				//Pen p = new Pen(s.GetColor(),5);
-				SolidBrush b = new SolidBrush(s.GetColor());
+					Vector2[] point = et.lineRenderer.GetPoints();
 
-				List<Point> points = new List<Point>();
-				for (int i = 0; i < s.GetDrawingPoints().Length; i++)
-				{
-					//get all points
-					Vector2 v = s.GetDrawingPoints()[i];
+					//i is the second on in the array so i-1 makes it to the first
+                    for (int i = 1; i < point.Length; i++)
+                    {
+						g.DrawLine(p, point[i-1].x, point[i - 1].y, point[i].x, point[i].y);
+					}
+                }
 
-					//make rotation
-					Vector2 rot = new Vector2();
-					rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
-					v = rot;
+				if (et.spriteRenderer != null)
+                {
+					SpriteRenderer s = et.GetSprite();
 
-					//add points postion anf into the drawing
-					points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
+					if (s != null && s.GetSpriteType() == SpriteType.SPRITE)
+					{
+						g.DrawImage(s.GetImageSprite(), et.transform.Position.x, et.transform.Position.y, et.transform.Scale.x, et.transform.Scale.y);
+						continue;
+					}
+
+					//Pen p = new Pen(s.GetColor(),5);
+					SolidBrush b = new SolidBrush(s.GetColor());
+
+					List<Point> points = new List<Point>();
+					for (int i = 0; i < s.GetDrawingPoints().Length; i++)
+					{
+						//get all points
+						Vector2 v = s.GetDrawingPoints()[i];
+
+						//make rotation
+						Vector2 rot = new Vector2();
+						rot = Vector2.MatMul(matrix.RotationZ(et.transform.zAxis), v);
+						v = rot;
+
+						//add points postion anf into the drawing
+						points.Add(new Point((int)(et.transform.Position.x + et.transform.Scale.x * v.x), (int)(et.transform.Position.y + et.transform.Scale.y * v.y)));
+					}
+					g.FillPolygon(b, points.ToArray());
 				}
-				g.FillPolygon(b, points.ToArray());
 			}
 		}
-        #endregion
+		#endregion
 
-        #region Physics
+		#region Physics
 		class Combinations
         {
 			public Combinations(Rigidbody rb, Collider col)
@@ -218,7 +241,7 @@ namespace EntitledEngine2.Engine
 
 				r_list.Add(rb);
             }
-			Debug.Log(r_list.Count.ToString());
+			//Debug.Log(r_list.Count.ToString());
 		}
 		private void getColliders()
         {
@@ -230,7 +253,7 @@ namespace EntitledEngine2.Engine
 
 				c_list.Add(col);
 			}
-			Debug.Log(c_list.Count.ToString());
+			//Debug.Log(c_list.Count.ToString());
 		}
 		private void CombinationCalculation()
         {
@@ -323,9 +346,10 @@ namespace EntitledEngine2.Engine
 
 						Vector2 KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass, KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
 
+						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}", ConsoleColor.Blue);
 
 						//check how much each velocity has energy
-						Vector2 totalKineticEnergyAfter = KE1A + KE2A;
+						Vector2 totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
 
 						Debug.Log($"velocity 1: {vel1After} velocity 2: {vel2After}");
 
@@ -341,7 +365,7 @@ namespace EntitledEngine2.Engine
 						//new kinetic energy limited to the same amount before
 						KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass;
 						KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
-						totalKineticEnergyAfter = KE1A + KE2A;
+						totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
 
 						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}",ConsoleColor.Blue);
 
@@ -378,7 +402,7 @@ namespace EntitledEngine2.Engine
                 {
 					rb.Velocity.x *= -1;
                 }
-				if (rb.position.y - rb.ownCollider.radius < -ScreenSize.y || rb.position.y + rb.ownCollider.radius > ScreenSize.y)
+				if (/*rb.position.y - rb.ownCollider.radius < -ScreenSize.y ||*/ rb.position.y + rb.ownCollider.radius > ScreenSize.y)
 				{
 					rb.Velocity.y *= -1;
 				}

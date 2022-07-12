@@ -4,7 +4,7 @@ using EntitledEngine2.Engine.Core.Vec2;
 
 namespace EntitledEngine2.Engine.Core.Shapes
 {
-	public class Triangle : Sprite
+	public class Triangle : SpriteRenderer
 	{
 		private Vector2[] Points;
 		public Color color;
@@ -23,21 +23,21 @@ namespace EntitledEngine2.Engine.Core.Shapes
 /*			Engine.Engine.RegisterSprite(this);*/
 		}
 
-		public override Vector2[] GetDrawingPoints()
+		public Vector2[] GetDrawingPoints()
 		{
 			Points = CalculatePoints();
 			return Points;
 		}
 
-		public override Color GetColor()
+		public Color GetColor()
 		{
 			return color;
 		}
-		public override SpriteType GetSpriteType()
+		public SpriteType GetSpriteType()
 		{
 			return TYPE;
 		}
-		public override void SetColor(Color color)
+		public void SetColor(Color color)
 		{
 			this.color = color;
 		}
@@ -53,7 +53,12 @@ namespace EntitledEngine2.Engine.Core.Shapes
 			return _Points;
 		}
 
-		/*public override void Dispose() => DestroySelf();
+        public Image GetImageSprite()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /*public override void Dispose() => DestroySelf();
 
 		public void DestroySelf()
 		{
@@ -61,6 +66,6 @@ namespace EntitledEngine2.Engine.Core.Shapes
 			Engine.Engine.UnRegisterSprite(this);
 		}*/
 
-		
-	}
+
+    }
 }
