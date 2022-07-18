@@ -21,8 +21,8 @@ namespace EntitledEngine2.Engine.Core.ECS
     {
         #region Publics
 
-        public string name { private set; get; }
-        public Transform transform { private set; get; }
+        public string name { private set; get; } = "<NAME>";
+        public Transform transform { private set; get; } = new Transform();
         #endregion
 
         #region Privates

@@ -182,7 +182,7 @@ namespace EntitledEngine2.Engine
                 {
 					Pen p = new Pen(et.lineRenderer.GetLineColor(),4);
 
-					Vector2[] point = et.lineRenderer.GetPoints();
+					Vector2[] point = et.lineRenderer.GetPoints().ToArray();
 
 					//i is the second on in the array so i-1 makes it to the first
                     for (int i = 1; i < point.Length; i++)

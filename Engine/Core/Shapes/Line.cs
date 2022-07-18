@@ -10,7 +10,7 @@ namespace EntitledEngine2.Engine.Core.Shapes
 {
     public class Line : LineRenderer
     {
-        public Color Color { private set; get; }
+        public Color Color { private set; get; } = Color.White;
         public List<Vector2> Points = new List<Vector2>();
 
         public Line(Color lineColor)
@@ -33,9 +33,9 @@ namespace EntitledEngine2.Engine.Core.Shapes
             return Color;
         }
 
-        public Vector2[] GetPoints()
+        public List<Vector2> GetPoints()
         {
-            return Points.ToArray();
+            return Points;
         }
 
         public void AddPoint(Vector2 point)
