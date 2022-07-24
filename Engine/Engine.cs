@@ -377,8 +377,8 @@ namespace EntitledEngine2.Engine
 						Vector2 totalKineticEnergyBefore = KE1B + KE2B;
 
 						//get new energies
-						Vector2 vel1After = rb.Velocity  - (2 * rb2.Mass)/ (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb.Velocity - rb2.Velocity), (rb.position - rb2.position)) / (Vector2.Normalized(rb.position - rb2.position) * Vector2.Normalized(rb.position - rb2.position))) * (rb.position - rb2.position);
-						Vector2 vel2After = rb2.Velocity - (2 * rb.Mass) / (rb.Mass + rb2.Mass) * (Mathf.InnerProduct((rb2.Velocity - rb.Velocity), (rb2.position - rb.position)) / (Vector2.Normalized(rb2.position - rb.position) * Vector2.Normalized(rb2.position - rb.position))) * (rb2.position - rb.position);
+						Vector2 vel1After = rb.Velocity  - (2 * rb2.Mass)/ (rb.Mass + rb2.Mass) * ((rb.Velocity - rb2.Velocity) * (rb.position - rb2.position) / (Vector2.Normalized(rb.position - rb2.position) * Vector2.Normalized(rb.position - rb2.position))) * (rb.position - rb2.position);
+						Vector2 vel2After = rb2.Velocity - (2 * rb.Mass) / (rb.Mass + rb2.Mass) * ((rb2.Velocity - rb.Velocity) * (rb2.position - rb.position) / (Vector2.Normalized(rb2.position - rb.position) * Vector2.Normalized(rb2.position - rb.position))) * (rb2.position - rb.position);
 
 						Vector2 KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass, KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
 
@@ -401,13 +401,13 @@ namespace EntitledEngine2.Engine
 						//new kinetic energy limited to the same amount before
 						KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass;
 						KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
-						totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
+						//totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
 
 						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}",ConsoleColor.Blue);
 
 						//making the kinetic energy also on the velocitys
-						rb.Velocity = KE1A;
-						rb2.Velocity = KE2A;
+						rb.Velocity = vel1After;
+						rb2.Velocity = vel2After;
 
 
 
