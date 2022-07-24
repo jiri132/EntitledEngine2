@@ -7,7 +7,7 @@ namespace EntitledEngine2.Engine.Core.Shapes
 {
 	public enum SpriteType { PLANE, TRIANGLE, CIRCLE, SPRITE }
 
-	public interface SpriteRenderer : Component , ComponentRenderer
+	public interface SpriteRenderer : Component
 	{
 		//getters / setters
 		Image GetImageSprite();

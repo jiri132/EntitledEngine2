@@ -20,8 +20,8 @@ namespace EntitledEngine2
 		Entity a = new Entity("a", EntityType.Physics);
 		Entity b = new Entity("b", EntityType.Physics);
 
-		Entity Line = new Entity("line");
-		Entity Lineb = new Entity("lineB");
+		//Entity Line = new Entity("line");
+		//Entity Lineb = new Entity("lineB");
 
 		Text Text = new Text("hello", new Vector2(0,0),true);
 
@@ -53,16 +53,16 @@ namespace EntitledEngine2
             b.rigidbody.Velocity = new Vector2(-200, 0);
             b.rigidbody.Gravity = 9.81f;
 
-			Line.AddComponent(Component_TYPE.LINE_RENDERER);
-			Lineb.AddComponent(Component_TYPE.LINE_RENDERER);
+			a.AddComponent(Component_TYPE.LINE_RENDERER);
+			b.AddComponent(Component_TYPE.LINE_RENDERER);
 
-			Lineb.lineRenderer.AddPoint(new Vector2(0, 0));
-			Line.lineRenderer.AddPoint(new Vector2(0, 0)); 
-			/*Line.lineRenderer.AddPoint(new Vector2(100, 100)); 
-			Line.lineRenderer.AddPoint(new Vector2(100, 100)); 
-			Line.lineRenderer.AddPoint(new Vector2(100, 100));
-*/
+			b.lineRenderer.AddPoint(b.transform.Position);
+			a.lineRenderer.AddPoint(a.transform.Position);
 
+			a.lineRenderer.SetTrail(true);
+			b.lineRenderer.SetTrail(true);
+
+			a.lineRenderer.SetLineColor(Color.Green);
 		}
 
 		float time = 0;
@@ -74,18 +74,10 @@ namespace EntitledEngine2
 			//Debug.Log(Line.lineRenderer.GetPoints().ToString());
 			if (time > 0.01)
 			{
-				Line.lineRenderer.AddPoint(a.transform.Position);
-				Lineb.lineRenderer.AddPoint(b.transform.Position);
-
+				
 				time = 0;
-				if (Line.lineRenderer.GetPoints().Count > 50)
-                {
-					Line.lineRenderer.GetPoints().RemoveAt(0);
-                }
-				if (Lineb.lineRenderer.GetPoints().Count > 50)
-				{
-					Lineb.lineRenderer.GetPoints().RemoveAt(0);
-				}
+				a.lineRenderer.UpdateTrail(a.transform.Position);
+				b.lineRenderer.UpdateTrail(b.transform.Position);
 			}
 
 		}
