@@ -12,7 +12,7 @@ namespace EntitledEngine2.Engine.Core.Shapes
     {
         public Color Color { private set; get; } = Color.White;
         public bool isTrail { private set; get; } = false;
-        public int maxPoints { private set; get; } = 50;
+        public int maxPoints { private set; get; } = 15;
 
         public List<Vector2> Points = new List<Vector2>();
 

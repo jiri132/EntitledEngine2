@@ -106,7 +106,7 @@ namespace EntitledEngine2.Engine.Core.Colliders
         }
         public override float Radius()
         {
-            return _ownEntity.transform.Scale.xy / 2;
+            return _ownEntity.transform.Scale.xy / 2f;
         }
 
         
