@@ -193,13 +193,18 @@ namespace EntitledEngine2.Engine.Core.Vec2
 		#endregion
 		#region Maths
 		#region Nromalized - Distance
-		public static float Distance(Vector2 p1, Vector2 p2)
+		public static float DistanceFloat(Vector2 p1, Vector2 p2)
 		{
 			float x1 = p1.x, x2 = p2.x;
 			float y1 = p1.y, y2 = p2.y;
 			return Mathf.sqrt(Mathf.pow((x1 - x2), 2) + Mathf.pow((y1 - y2), 2));
 		}
-
+		public static Vector2 DistanceVec(Vector2 p1, Vector2 p2)
+        {
+			float x1 = p1.x, x2 = p2.x;
+			float y1 = p1.y, y2 = p2.y;
+			return new Vector2(x1 - x2, y1 - y2);
+        }
 		public static Vector2 Normalized(Vector2 a)
 		{
 			if (Mathf.Magnitude(a) > 0)
