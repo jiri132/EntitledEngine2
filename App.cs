@@ -15,11 +15,11 @@ namespace EntitledEngine2
 	class App : Engine.Engine
 	{
 
-		public App() : base(new Vector2(528, 550), "Entitled Engine Demo") { }
+		public App() : base(new Vector2(512, 512), "Entitled Engine Demo") { }
 
 		Entity a = new Entity("a", EntityType.Physics);
 		Entity b = new Entity("b", EntityType.Physics);
-
+		Entity c = new Entity("c", EntityType.Physics);
 		//Entity Line = new Entity("line");
 		//Entity Lineb = new Entity("lineB");
 
@@ -53,16 +53,27 @@ namespace EntitledEngine2
             b.rigidbody.Velocity = new Vector2(-200, 0);
             b.rigidbody.Gravity = 9.81f;
 
+			c.transform.Position = new Vector2(-300, -300);
+			c.transform.Scale = new Vector2(40, 40);
+			c.SetSprite(new Circle(Color.Red, ""));
+			c.SetCollider(ColliderType.Circle);
+			c.rigidbody.Velocity = new Vector2(-125, 0);
+			c.rigidbody.Gravity = 9.81f;
+
 			a.AddComponent(Component_TYPE.LINE_RENDERER);
 			b.AddComponent(Component_TYPE.LINE_RENDERER);
+			c.AddComponent(Component_TYPE.LINE_RENDERER);
 
 			b.lineRenderer.AddPoint(b.transform.Position);
 			a.lineRenderer.AddPoint(a.transform.Position);
+			c.lineRenderer.AddPoint(c.transform.Position);
 
 			a.lineRenderer.SetTrail(true);
 			b.lineRenderer.SetTrail(true);
+			c.lineRenderer.SetTrail(true);
 
 			a.lineRenderer.SetLineColor(Color.Green);
+			c.lineRenderer.SetLineColor(Color.Red);
 		}
 
 		float time = 0;
@@ -72,7 +83,7 @@ namespace EntitledEngine2
 			Text.SetPosition(a.transform.Position - a.transform.Scale / 4);
 			time += Engine.Engine.deltaTime;
 			//Debug.Log(Line.lineRenderer.GetPoints().ToString());
-			if (time > 0.01)
+			if (time > 0.1)
 			{
 				
 				time = 0;
