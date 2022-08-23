@@ -88,7 +88,7 @@ namespace EntitledEngine2.Engine
 			this.Title = Title;
 			//give all behaviours of the window
 			Window = new Canvas();
-			Window.Size = new Size((int)this.ScreenSize.x, (int)this.ScreenSize.y);
+			Window.Size = new Size((int)this.ScreenSize.x + 3, (int)this.ScreenSize.y + 16);
 			Window.Text = this.Title;
 			Window.Paint += Renderer;
 			Window.KeyDown += Window_KeyDown;
@@ -319,8 +319,8 @@ namespace EntitledEngine2.Engine
 					}
 					if (Double) { continue; }
 
-					if (rigidbody.position.x < collider.position.x + collider.scale.x &&
-						rigidbody.position.x + rigidbody.scale.x > collider.position.x)
+					if (rigidbody.position.x - 100 < collider.position.x + collider.scale.x &&
+						rigidbody.position.x + rigidbody.scale.x + 100 > collider.position.x)
                     {
 						combs.Add(new Combinations(rigidbody,collider));
                     }
@@ -354,16 +354,20 @@ namespace EntitledEngine2.Engine
 
 						//multiplie these 2 parts and you get a really weird answer back
 						//when converting to ints it got overflown which it shouldn't
+						/*
+						 * TO DEBUG ALL PARTS OF THE CALCULATION
 						Debug.Log(part1.ToString());
 						Debug.Log(part2.ToString());
 						Debug.Log(part3.ToString());
 
 						Debug.Log((part2 * part3) .ToString());
+						*/
+
 
 						//rb.Velocity = rb.Velocity - (2 * m2 / (rb.Mass + m2)) * (Mathf.InnerProduct((rb.Velocity - v2), (rb.position - col.position)) / (Vector2.Normalized(rb.position - col.position) * 2)) * (rb.position - col.position);
 						rb.Velocity = rb.Velocity - part1 * part2 * part3;
 
-						Debug.Log("vel after" + rb.Velocity.ToString());
+						//Debug.Log("vel after" + rb.Velocity.ToString());
                     }else
                     {
 						Rigidbody rb2 = col.ownEntity.rigidbody;
@@ -382,17 +386,17 @@ namespace EntitledEngine2.Engine
 
 						Vector2 KE1A = (vel1After * rb.Mass < 0) ? vel1After * rb.Mass * -1 : vel1After * rb.Mass, KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
 
-						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}", ConsoleColor.Blue);
+						//Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}", ConsoleColor.Blue);
 
 						//check how much each velocity has energy
 						Vector2 totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
 
-						Debug.Log($"velocity 1: {vel1After} velocity 2: {vel2After}");
+						//Debug.Log($"velocity 1: {vel1After} velocity 2: {vel2After}");
 
 
 						//Vector2 KE1P = KE1 / totalKineticEnergyAfter, KE2P = KE2 / totalKineticEnergyAfter;
 
-						Debug.Log($"\nbefore collision KE: {totalKineticEnergyBefore} \nAfter collision KE {totalKineticEnergyAfter} \nDifference: {totalKineticEnergyBefore / totalKineticEnergyAfter} After Difference: {totalKineticEnergyAfter * (totalKineticEnergyBefore / totalKineticEnergyAfter)}");
+						//Debug.Log($"\nbefore collision KE: {totalKineticEnergyBefore} \nAfter collision KE {totalKineticEnergyAfter} \nDifference: {totalKineticEnergyBefore / totalKineticEnergyAfter} After Difference: {totalKineticEnergyAfter * (totalKineticEnergyBefore / totalKineticEnergyAfter)}");
 
 						Vector2 multiplierDifference = totalKineticEnergyAfter / totalKineticEnergyBefore;
 						vel1After /= multiplierDifference;
@@ -403,13 +407,16 @@ namespace EntitledEngine2.Engine
 						KE2A = (vel2After * rb2.Mass < 0) ? vel2After * rb2.Mass * -1 : vel2After * rb2.Mass;
 						//totalKineticEnergyAfter = KE1A.Positive() + KE2A.Positive();
 
-						Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}",ConsoleColor.Blue);
+						//Debug.CustomLog($"KE1A {KE1A} KE2A{KE2A}",ConsoleColor.Blue);
 
 						//making the kinetic energy also on the velocitys
 						rb.Velocity = vel1After;
 						rb2.Velocity = vel2After;
 
-
+						//FIX for getting the unstuck if t deep into eachother
+						Vector2 dist = Vector2.DistanceVec(rb.position, rb2.position) / 50f;
+						rb.ownEntity.transform.Position += dist;
+						rb2.ownEntity.transform.Position += dist * -1;
 
 						Debug.Log(rb.Velocity.ToString());
 						Debug.Log(rb2.Velocity.ToString());
@@ -436,6 +443,7 @@ namespace EntitledEngine2.Engine
 
             foreach (Rigidbody rb in r_list)
             {
+				bool hitGround = false;
 				if(rb.position.x - rb.ownCollider.radius < -ScreenSize.x || rb.position.x + rb.ownCollider.radius > ScreenSize.x )
                 {
 					OnCollision(null);
@@ -445,14 +453,14 @@ namespace EntitledEngine2.Engine
 				{
 					OnCollision(null);
 					rb.Velocity.y *= -1;
+					hitGround = true;
 				}
 
 
 
 				//Debug.Log($"[{rb.ownEntity.name}] Velocity : " + rb.Velocity.ToString());
 				//Debug.Log($"[{rb.ownEntity.name}] Position : " + rb.position.ToString() + "\n");
-
-				rb.Velocity.y += rb.Gravity;
+				if (!hitGround) { rb.Velocity.y += rb.Gravity; }
 				rb.UpdateBody();
 			}
 			
