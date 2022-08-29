@@ -21,11 +21,11 @@ This is the upfollower on my old engine Entitled Engine link to project: https:/
 | Physics | ✅ | ✅ |
 | Custom Sprites | ✅ | ✅ |
 | Sprite Slicer | ❌ | ✅ |
-| UI | ❌ | ❌ |
+| UI | ❌ | ✅ |
 | Rotations | ❌ | ✅ |
 | Custom Logs | ✅ | ✅ |
-| Exit Codes | ✅ | ❌ |
-| Sound System | ❌ | ❌ |
+| Exit Codes | ✅ | ✅ |
+| Sound System | ❌ | ✅ |
 | Unit to Pixel | ✅ | ❌ |
 
 # Diffuculties I faced during development
