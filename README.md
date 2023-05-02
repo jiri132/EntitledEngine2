@@ -1,4 +1,4 @@
-![Projects Logo](http://jiri.dscloud.me/GIT_README/EntitledEngine2/_EE2.png)<br>
+![Projects Logo](http://jiri.dscloud.me/Non-Active-Websites/GIT_README/EntitledEngine2/_EE2.png)<br>
 
 This is the upfollower on my old engine Entitled Engine link to project: https://github.com/jiri132/Entitled-Engine <br>
 
