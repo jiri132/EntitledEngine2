@@ -43,22 +43,22 @@ namespace EntitledEngine2.Engine.Core.ECS
             switch (type)
             {
                 case EntityType.Physics:
-                    Debug.Log($"automaticly added compenets for {name}");
+                    Debug.Log($"automaticly added componets for {name}");
                     AddComponent(Component_TYPE.SPRITE_RENDERER);
                     AddComponent(Component_TYPE.COLLIDER);
                     AddComponent(Component_TYPE.RIGIDBODY);
                     break;
                 case EntityType.Collider:
-                    Debug.Log($"automaticly added compenets for {name}");
+                    Debug.Log($"automaticly added componets for {name}");
                     AddComponent(Component_TYPE.SPRITE_RENDERER);
                     AddComponent(Component_TYPE.COLLIDER);
                     break;
                 case EntityType.Sprite:
-                    Debug.Log($"automaticly added compenets for {name}");
+                    Debug.Log($"automaticly added componets for {name}");
                     AddComponent(Component_TYPE.SPRITE_RENDERER);
                     break;
                 case EntityType.Clean:
-                    Debug.Log($"no automatic compenet adding for {name}");
+                    Debug.Log($"no automatic componets adding for {name}");
                     break;
                 default:
                     break;
