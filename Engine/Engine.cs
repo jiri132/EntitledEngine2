@@ -416,7 +416,7 @@ namespace EntitledEngine2.Engine
 						//FIX for getting the unstuck if t deep into eachother
 						Vector2 dist = Vector2.DistanceVec(rb.position, rb2.position) / 50f;
 						rb.ownEntity.transform.Position += dist;
-						rb2.ownEntity.transform.Position += dist * -1;
+						//rb2.ownEntity.transform.Position += dist * -1;
 
 						Debug.Log(rb.Velocity.ToString());
 						Debug.Log(rb2.Velocity.ToString());
